@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CozyDudeBoy | Portfolio</title>
+  <meta name="description" content="프로젝트 링크를 한 페이지에 정리한 포트폴리오 원페이지" />
+
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --panel:#111318;
+      --panel2: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.10);
+      --text:#e5e7eb;
+      --sub:#9ca3af;
+      --muted: rgba(255,255,255,.04);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:24px;
+      --max:1120px;
+      --h1: clamp(34px, 5vw, 56px);
+      --h2: clamp(22px, 2.6vw, 30px);
+      --p: 15px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Apple SD Gothic Neo","Noto Sans KR", Arial, "맑은 고딕", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(125,211,252,.12), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(167,139,250,.10), transparent 55%),
+        var(--bg);
+      line-height:1.55;
+    }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+    button{ font:inherit; color:inherit; }
+    ::selection{ background: rgba(125,211,252,.25); }
+
+    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+    section{ padding: 84px 0; }
+
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:16px; margin-bottom: 22px;
+    }
+    .section-title h2{ margin:0; font-size: var(--h2); letter-spacing:-0.2px; }
+    .section-title p{ margin:0; color:var(--sub); max-width: 560px; font-size: var(--p); }
+
+    /* topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: rgba(11,12,16,.55);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .topbar__inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0; gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:0.2px; white-space:nowrap;
+    }
+    .brand__dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(125,211,252,.12);
+    }
+    .nav{
+      display:flex; align-items:center; gap: 10px;
+      flex-wrap:wrap; justify-content:flex-end;
+    }
+    .nav a{
+      font-size: 13px; color: var(--sub);
+      padding: 8px 10px; border-radius: 999px;
+      border: 1px solid transparent; transition: .2s ease;
+    }
+    .nav a:hover{
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.08);
+    }
+    .nav .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 9px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--text); font-size: 13px;
+      transition:.2s ease;
+    }
+    .nav .pill:hover{
+      transform: translateY(-1px);
+      border-color: rgba(125,211,252,.35);
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    .nav .pill .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--accent);
+    }
+
+    /* hero (원본 구조 유지) */
+    .hero{ padding: 78px 0 40px; }
+    .hero__grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+    .hero h1{
+      font-size: var(--h1);
+      margin: 0 0 14px;
+      letter-spacing: -0.8px;
+      line-height: 1.07;
+    }
+    .hero .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--sub); font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .hero .kicker .spark{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .hero p{
+      margin: 0 0 18px;
+      color: var(--sub);
+      font-size: 15px;
+      max-width: 680px;
+    }
+    .cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 12px 14px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      cursor:pointer; transition: .2s ease;
+      font-weight: 650; font-size: 14px;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(125,211,252,.35);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(125,211,252,.18), rgba(167,139,250,.18));
+      border-color: rgba(125,211,252,.35);
+    }
+    .btn.ghost{ background: transparent; }
+
+    .hero-card{
+      height:100%;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(700px 420px at 40% 0%, rgba(125,211,252,.16), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .hero-card .preview{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      aspect-ratio: 16 / 10;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-card .preview::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(320px 240px at 30% 30%, rgba(125,211,252,.18), transparent 60%),
+        radial-gradient(320px 240px at 70% 60%, rgba(167,139,250,.14), transparent 60%);
+      opacity:.9;
+    }
+    .hero-card .mini{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--sub); font-size: 13px;
+      white-space:nowrap;
+    }
+    .chip .tiny{ width:8px;height:8px;border-radius:999px; background: var(--accent); }
+
+    /* panels */
+    .panel{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+    }
+    .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .pad{ padding: 22px; }
+    .muted{ color: var(--sub); }
+    .list{ margin: 10px 0 0; padding-left: 18px; color: var(--sub); }
+    .list li{ margin: 6px 0; }
+
+    /* skills */
+    .skill-box{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px; }
+    .tag{
+      display:inline-flex; align-items:center;
+      padding: 9px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--text); font-size: 13px;
+    }
+    .tag::before{
+      content:"";
+      width:8px;height:8px;border-radius:999px;
+      margin-right: 8px;
+      background: rgba(125,211,252,.85);
+    }
+
+    /* projects */
+    .tools-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+      margin: 10px 0 20px;
+    }
+    .search{
+      flex: 1 1 320px;
+      display:flex; align-items:center; gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .search input{
+      width:100%; border:none; outline:none;
+      background: transparent; color: var(--text);
+      font-size: 14px;
+    }
+    .search .icon{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(125,211,252,.12);
+    }
+
+    .proj-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .proj-card{
+      grid-column: span 4;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      position:relative;
+      transition: .2s ease;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+      cursor:pointer;
+    }
+    .proj-card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(125,211,252,.28);
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+    }
+
+    /* ✅ 여기만 “썸네일 붙이기”로 변경 (나머지 구조 유지) */
+    .thumb{
+      aspect-ratio: 16 / 9;
+      background: rgba(255,255,255,.04);
+      position:relative;
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform: scale(1.02);
+      transition: transform .35s ease;
+    }
+    .proj-card:hover .thumb img{ transform: scale(1.07); }
+    .thumb::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
+      pointer-events:none;
+    }
+
+    .proj-body{ padding: 14px 14px 16px; }
+    .proj-title{ margin:0; font-size: 16px; letter-spacing:-0.2px; }
+    .proj-desc{ margin: 6px 0 10px; color: var(--sub); font-size: 13px; min-height: 38px; }
+    .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+    .mini-tag{
+      font-size: 12px; color: var(--sub);
+      padding: 7px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .proj-actions{ display:flex; gap:8px; margin-top: 12px; }
+    .link-btn{
+      flex: 1;
+      display:inline-flex; justify-content:center; align-items:center; gap:8px;
+      padding: 10px 10px; border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 13px; cursor:pointer;
+      transition:.2s ease;
+    }
+    .link-btn:hover{
+      border-color: rgba(125,211,252,.35);
+      background: rgba(125,211,252,.10);
+    }
+    .link-btn.detail{
+      background: linear-gradient(90deg, rgba(125,211,252,.14), rgba(167,139,250,.14));
+      border-color: rgba(125,211,252,.25);
+    }
+
+    /* team slider */
+    .slider{ position:relative; overflow:hidden; }
+    .slider__viewport{
+      overflow:hidden;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+    }
+    .slider__track{ display:flex; transition: transform .35s ease; }
+    .slide{
+      min-width: 100%;
+      padding: 22px;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items:center;
+    }
+
+    .slide .shot{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      aspect-ratio: 16 / 10;
+      position:relative;
+      overflow:hidden;
+    }
+    .slide .shot img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform: scale(1.02);
+    }
+    .slide .shot::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.35));
+      pointer-events:none;
+    }
+
+    .slide h3{ margin:0 0 6px; }
+    .slide p{ margin:0 0 12px; color: var(--sub); }
+
+    .slider__btn{
+      position:absolute; top: 50%;
+      transform: translateY(-50%);
+      width:44px;height:44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(10px);
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition: .2s ease;
+    }
+    .slider__btn:hover{ border-color: rgba(125,211,252,.35); }
+    .slider__btn.prev{ left: 12px; }
+    .slider__btn.next{ right: 12px; }
+    .arrow{
+      width: 10px; height: 10px;
+      border-right: 2px solid var(--text);
+      border-bottom: 2px solid var(--text);
+      transform: rotate(135deg);
+    }
+    .slider__btn.next .arrow{ transform: rotate(-45deg); }
+
+    .dots{ display:flex; gap:8px; justify-content:center; margin-top: 12px; }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .dot.active{
+      width: 18px;
+      background: rgba(125,211,252,.65);
+      border-color: rgba(125,211,252,.45);
+    }
+
+    /* contact */
+    form{ display:grid; gap: 10px; }
+    .field{ display:grid; gap:6px; }
+    label{ font-size: 13px; color: var(--sub); }
+    input, textarea{
+      width:100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      outline:none;
+      transition:.2s ease;
+    }
+    textarea{ min-height: 120px; resize: vertical; }
+    input:focus, textarea:focus{
+      border-color: rgba(125,211,252,.35);
+      box-shadow: 0 0 0 6px rgba(125,211,252,.10);
+    }
+    .form-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .hint{ color: var(--sub); font-size: 13px; }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(17,19,24,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 12px 14px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      color: var(--text);
+      display:none;
+      z-index: 90;
+      max-width: min(520px, calc(100% - 26px));
+    }
+    .toast.show{ display:block; }
+
+    footer{
+      padding: 22px 0 50px;
+      color: var(--sub);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.15);
+    }
+
+    /* modal */
+    .modal-overlay{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 80;
+      padding: 18px;
+    }
+    .modal-overlay.show{ display:flex; }
+    .modal{
+      width: min(980px, 100%);
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(17,19,24,.92);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      max-height: min(78vh, 760px);
+    }
+    .modal__media{
+      padding: 16px;
+      border-right: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(680px 420px at 30% 0%, rgba(125,211,252,.14), transparent 60%),
+        rgba(255,255,255,.02);
+    }
+    .modal__shot{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      aspect-ratio: 16 / 10;
+      position:relative;
+      overflow:hidden;
+    }
+    .modal__shot img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform: scale(1.02);
+    }
+    .modal__shot::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.35));
+      pointer-events:none;
+    }
+    .modal__content{ padding: 16px 16px 18px; overflow:auto; }
+    .modal__top{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap: 10px; margin-bottom: 10px;
+    }
+    .modal__top h3{ margin:0; font-size: 20px; letter-spacing:-0.2px; }
+    .xbtn{
+      width:40px;height:40px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .xbtn:hover{
+      border-color: rgba(125,211,252,.35);
+      background: rgba(125,211,252,.10);
+    }
+    .meta{ color: var(--sub); font-size: 13px; margin-bottom: 10px; }
+    .modal__content p{ margin: 0 0 14px; color: var(--sub); font-size: 14px; }
+    .block-title{ font-weight: 750; margin: 12px 0 8px; font-size: 14px; }
+    .bullets{ margin: 0 0 10px; padding-left: 18px; color: var(--sub); font-size: 14px; }
+    .kv{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--sub);
+      font-size: 13px;
+    }
+    .kv b{ color: var(--text); font-weight: 750; }
+    .modal__links{ display:flex; gap:8px; margin-top: 12px; }
+    .modal__links a{ flex:1; }
+
+    .divider{ height: 1px; background: rgba(255,255,255,.08); margin: 18px 0; }
+    .hero-card .preview{
+  background-image: url("assets/thumbs/thumb_me.jpg");
+  background-size: cover;
+  background-position: center;
+}
+    @media (max-width: 980px){
+      .hero__grid{ grid-template-columns: 1fr; }
+      .slide{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 880px){
+      .proj-card{ grid-column: span 6; }
+      .modal{ grid-template-columns: 1fr; }
+      .modal__media{ border-right:none; border-bottom: 1px solid rgba(255,255,255,.08); }
+    }
+    @media (max-width: 520px){
+      section{ padding: 64px 0; }
+      .proj-card{ grid-column: span 12; }
+      .form-row{ grid-template-columns: 1fr; }
+      .nav a{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="#top" aria-label="Go to top">
+        <span class="brand__dot"></span>
+        <span>CozyDudeBoy</span>
+      </a>
+
+      <nav class="nav" aria-label="page navigation">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+
+        <a class="pill" href="#" id="topGithubBtn" target="_blank" rel="noreferrer">
+          <span class="dot"></span> GitHub
+        </a>
+        <a class="pill" href="#" id="topResumeBtn" target="_blank" rel="noreferrer">
+          <span class="dot"></span> Resume
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div>
+          <div class="kicker"><span class="spark"></span> Frontend Developer · UI / UX</div>
+          <h1>사용자 경험을 설계하는 프론트엔드 개발자 <br> 정하영입니다</h1>
+          <p>
+            Frontend Developer · UI / UX
+            <br>
+            <br>
+            정하영
+            <br>
+            00.01.25
+            <br>
+            ihatethiscode999@gmail.com
+            <br>
+            서울시 금천구
+            <br>
+            <br>
+            UI/UX를 이해하고 React 기반으로 실제 서비스 구조를 설계하고 구현합니다.
+            <br>
+            팀 프로젝트와 개인 프로젝트를 통해
+            DB 모델링, REST API 연동, 인증 처리, <br>상태 관리 구조 설계를 경험했습니다.
+            <br>
+            <br>
+            기능 구현을 넘어,
+            사용자 경험과 코드 구조를 함께 설계하는 개발자를 지향합니다.
+            
+          </p>
+
+        </div>
+
+        <!-- ✅ 원본 hero-card 구조 유지 (preview + mini 그대로) -->
+        <aside class="hero-card" aria-label="highlight card">
+          <div class="preview" aria-hidden="true"></div>
+          <div class="cta-row">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="#" id="heroGithubBtn" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="btn" href="#" id="heroResumeBtn" target="_blank" rel="noreferrer">Resume</a>
+            <a class="btn ghost" href="#contact">Contact</a>
+          </div>
+
+          <div class="cta-row" style="margin-top:14px;">
+            <span class="chip"><span class="tiny"></span> Clean UI</span>
+            <span class="chip"><span class="tiny"></span> Landing / Publishing</span>
+            <span class="chip"><span class="tiny"></span> Team Project</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>About</h2>
+          <p>짧고 명확하게. 링크를 클릭하면 결과물을 바로 확인할 수 있습니다.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel pad">
+            <h3 style="margin:0 0 8px;">요약</h3>
+            <p class="muted" style="margin:0;">
+              사용자의 시선 흐름과 정보 구조를 고려해 랜딩페이지를 구성하고,
+              팀 프로젝트에서는 데이터 구조/연동을 포함해 끝까지 완성하는 것을 목표로 합니다.
+            </p>
+            <ul class="list">
+              <li>랜딩 리뉴얼(브랜드/정보 구조/가독성 개선)</li>
+              <li>React 기반 서비스형 프로젝트 경험(PING)</li>
+              <li>PHP·MySQL 기반 CRUD/관리자 기능 구현(Webzen)</li>
+            </ul>
+          </div>
+
+          <div class="panel pad">
+            <h3 style="margin:0 0 8px;">Key Strength</h3>
+            <ul class="list">
+              <li>레이아웃/타이포/여백으로 밀도 조절 → 가독성 개선</li>
+              <li>컴포넌트화 가능한 UI 구조 설계</li>
+              <li>프로젝트별 역할과 결과를 “짧게” 전달하는 정리 능력</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <div class="muted" style="font-size:13px;">
+              * 카드 클릭 → 상세 모달에서 기능/역할/테스트 계정 확인 가능
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-title">
+          <h2>Skills</h2>
+          <p>퍼센트 대신 실제 사용한 스택을 정리했습니다.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel pad">
+            <h3 style="margin:0 0 8px;">Frontend</h3>
+            <div class="skill-box">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">SCSS / Sass</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">JQuery</span>
+              <span class="tag">React</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 style="margin:0 0 8px;">Backend</h3>
+            <div class="skill-box">
+              <span class="tag">PHP</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">CRUD</span>
+              <span class="tag">Auth / Admin</span>
+            </div>
+          </div>
+
+          <div class="panel pad">
+            <h3 style="margin:0 0 8px;">Tools</h3>
+            <div class="skill-box">
+              <span class="tag">Git</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Bootstrap</span>
+              <span class="tag">TailWind</span>
+              <span class="tag">Cloudtype</span>
+              <span class="tag">ERD Cloud</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 style="margin:0 0 8px;">What I focus on</h3>
+            <ul class="list">
+              <li>‘보기 좋은 구조’로 정리되는 UI 구성</li>
+              <li>랜딩: 브랜드 톤 유지 + 정보 구조/가독성 개선</li>
+              <li>팀 프로젝트: 흐름(요청→처리→DB→출력) 전체 설계</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-title">
+          <h2>Projects</h2>
+          <p>검색 후 카드 클릭하면 상세 모달이 열립니다. (Live / GitHub)</p>
+        </div>
+
+        <div class="tools-row">
+          <div class="search" role="search">
+            <span class="icon" aria-hidden="true"></span>
+            <input id="projectSearch" type="text" placeholder="Search (ex: PING, PHP, Landing, React, MySQL)" />
+          </div>
+          <button class="btn" id="resetSearchBtn" type="button">Reset</button>
+        </div>
+
+        <div class="proj-grid" id="projectGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team">
+      <div class="container">
+        <div class="section-title">
+          <h2>Team Project</h2>
+          <p>팀 프로젝트 2개를 슬라이더로 정리했습니다.</p>
+        </div>
+
+        <div class="slider" aria-label="team slider">
+          <div class="slider__viewport">
+            <div class="slider__track" id="sliderTrack"></div>
+          </div>
+
+          <button class="slider__btn prev" type="button" id="prevSlide" aria-label="previous slide">
+            <span class="arrow" aria-hidden="true"></span>
+          </button>
+          <button class="slider__btn next" type="button" id="nextSlide" aria-label="next slide">
+            <span class="arrow" aria-hidden="true"></span>
+          </button>
+
+          <div class="dots" id="sliderDots" aria-label="slider dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>메일/링크를 빠르게 확인할 수 있도록 최소 구성으로 만들었습니다.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel pad">
+            <h3 style="margin:0 0 8px;">Links</h3>
+            <p class="muted" style="margin:0 0 12px;">GitHub / Resume 링크를 바로 확인할 수 있습니다.</p>
+            <div class="cta-row">
+              <a class="btn primary" id="contactGithubBtn" href="#" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="btn" id="contactResumeBtn" href="#" target="_blank" rel="noreferrer">Resume</a>
+            </div>
+            <div class="divider"></div>
+            <p class="hint">
+              Email: <b id="emailText">ihatethiscode999@gmail.com</b>
+              <button class="btn" type="button" id="copyEmailBtn" style="padding:9px 12px; border-radius:12px;">Copy</button>
+            </p>
+          </div>
+
+          <div class="panel pad">
+            <h3 style="margin:0 0 8px;">Message</h3>
+            <form id="contactForm" novalidate>
+              <div class="form-row">
+                <div class="field">
+                  <label for="name">이름</label>
+                  <input id="name" type="text" placeholder="홍길동" />
+                </div>
+                <div class="field">
+                  <label for="email">이메일</label>
+                  <input id="email" type="email" placeholder="name@example.com" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="message">메시지</label>
+                <textarea id="message" placeholder="간단히 남겨주세요."></textarea>
+              </div>
+              <button class="btn primary" type="submit">Send (Demo)</button>
+              <p class="hint">* 데모 페이지라 실제 전송은 안 되고, 유효성 체크만 합니다.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">© <span id="year"></span> CozyDudeBoy · Portfolio</div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal__media">
+        <div class="modal__shot" id="modalShot" aria-hidden="true"></div>
+      </div>
+      <div class="modal__content">
+        <div class="modal__top">
+          <div>
+            <h3 id="modalTitle">Project Title</h3>
+            <div class="meta" id="modalMeta">기간 · 역할</div>
+          </div>
+          <button class="xbtn" type="button" id="closeModal" aria-label="close modal">✕</button>
+        </div>
+
+        <p id="modalSummary">프로젝트 요약</p>
+
+        <div id="modalTestWrap" style="display:none;">
+          <div class="block-title">테스트 계정</div>
+          <div class="kv" id="modalTest"></div>
+        </div>
+
+        <div class="block-title">핵심 기능</div>
+        <ul class="bullets" id="modalFeatures"></ul>
+
+        <div class="block-title">Tech</div>
+        <div class="tag-row" id="modalTech"></div>
+
+        <div class="modal__links">
+          <a class="link-btn" id="modalLive" href="#" target="_blank" rel="noreferrer">Live</a>
+          <a class="link-btn detail" id="modalGithub" href="#" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // =========================
+    // 0) 프로필 링크
+    // =========================
+    const PROFILE_LINKS = {
+      github: "https://github.com/CozyDudeBoy",
+      resume: "https://drive.google.com/drive/folders/1E2dSRAc49BwO6jxfQUTkBtAp-VMZX5sc",
+      email: "ihatethiscode999@gmail.com"
+    };
+
+    // =========================
+    // 1) 썸네일 경로
+    // =========================
+    const THUMBS = {
+      ping: "assets/thumbs/thumb_ping.jpg",
+      webzen: "assets/thumbs/thumb_webzen.jpg",
+      koreanair: "assets/thumbs/thumb_koreanair.jpg",
+      casper: "assets/thumbs/thumb_casper.jpg",
+      pascucci: "assets/thumbs/thumb_pascucci.jpg"
+    };
+
+    // =========================
+    // 2) 프로젝트 데이터
+    // =========================
+    const PROJECTS = [
+      {
+        id: "ping",
+        badge: "TEAM",
+        title: "PING 프로젝트",
+        desc: "디자인 이미지에 핀(좌표)을 찍어 구조화된 피드백을 주고받는 플랫폼",
+        period: "2026.01.05 – 2026.02.13",
+        role: "개발 (프론트 30% · 백엔드 70%)",
+        tech: ["React", "Sass", "MySQL"],
+        summary:
+          "PING은 디자인 이미지 위에 좌표 기반 핀을 생성해 질문/답변을 남길 수 있는 피드백 플랫폼입니다. " +
+          "서비스 흐름(업로드 → 탐색 → 디테일 → 핀 기반 Q&A)을 고려해 기능을 설계했고, 백엔드/DB 구조를 중심으로 구현했습니다.",
+        features: [
+          "핀(좌표) 기반 피드백 흐름 설계 및 구현",
+          "게시물·핀·답변 관계형 데이터 구조 설계/연동",
+          "서비스형 구조(관리자/사용자 플로우) 기반 화면 구성",
+          "배포 환경에서 동작하는 실사용 링크 제공"
+        ],
+        testAccount: "관리자: admin / 1234\n사용자: user1, user2, user3 / 1234",
+        live: "https://web-ping-frontend-mkvwe63p223f9070.sel3.cloudtype.app/",
+        github: "https://github.com/Kwag-hoon/react-ping",
+        thumb: THUMBS.ping
+      },
+      {
+        id: "webzen",
+        badge: "TEAM",
+        title: "Webzen 게임사이트 리뉴얼",
+        desc: "PHP·MySQL 기반 게시판/FAQ 및 관리자 기능을 구현한 게임 포털 리뉴얼",
+        period: "2025.11.11 – 2025.12.12",
+        role: "백엔드 개발",
+        tech: ["PHP", "MySQL", "Bootstrap", "Sass", "JavaScript"],
+        summary:
+          "Webzen 게임 포털 사이트를 리뉴얼하며 사용자/관리자 구조를 포함한 기능을 구현했습니다. " +
+          "PHP와 MySQL을 기반으로 CRUD(게시판/FAQ) 로직과 데이터 연동을 구성해 서비스 운영 형태를 재현했습니다.",
+        features: [
+          "MySQL 기반 DB 설계 및 테이블 관계 구성",
+          "게시판·FAQ CRUD 기능 구현 (등록/수정/삭제/조회)",
+          "관리자 로그인 및 권한 분리(운영 구조) 구현",
+          "Bootstrap·Sass 기반 UI 구조 정리"
+        ],
+        testAccount: "관리자: admin / 1234",
+        live: "https://ihatethiscode.dothome.co.kr/webzen/user/faq.php",
+        github: "https://github.com/kmrjsals-ops/project",
+        thumb: THUMBS.webzen
+      },
+      {
+        id: "koreanair",
+        badge: "PERSONAL",
+        title: "대한항공 리뉴얼 랜딩페이지",
+        desc: "대한항공 메인 랜딩을 기준으로 정보 구조/가독성을 개선해 리뉴얼한 퍼블리싱 프로젝트",
+        period: "2025.09.10 – 2025.09.26",
+        role: "전체 제작",
+        tech: ["HTML", "CSS", "JavaScript"],
+        summary:
+          "대한항공 공식 사이트를 기반으로 메인 랜딩페이지를 리뉴얼했습니다. " +
+          "메인 비주얼/검색 영역/프로모션 섹션을 재구성해 콘텐츠 밀도를 조절하고, 자연스러운 시선 흐름을 목표로 제작했습니다.",
+        features: [
+          "메인 히어로/프로모션 섹션 레이아웃 재구성",
+          "카드 UI 정리 및 가독성 중심 타이포/여백 개선",
+          "JavaScript 기반 간단 인터랙션 적용",
+          "반응형 레이아웃 구성"
+        ],
+        testAccount: "",
+        live: "https://ihatethiscode.dothome.co.kr/project1/",
+        github: "https://github.com/CozyDudeBoy/p1_koreanair",
+        thumb: THUMBS.koreanair
+      },
+      {
+        id: "casper",
+        badge: "MINI",
+        title: "현대 캐스퍼 랜딩페이지",
+        desc: "캐스퍼 온라인 구매 사이트를 참고해 제품 소개 중심의 랜딩을 간단 구현",
+        period: "2025.11.06 – 2025.11.13",
+        role: "전체 제작",
+        tech: ["HTML", "CSS", "SCSS", "JavaScript", "PHP"],
+        summary:
+          "캐스퍼 온라인 구매 사이트를 참고해 제품 소개 중심의 랜딩페이지를 제작했습니다. " +
+          "섹션 구성과 시각적 흐름을 정리하고, SCSS로 스타일 구조를 정돈했습니다.",
+        features: [
+          "메인 비주얼/특징 섹션/구매 유도 CTA 구성",
+          "SCSS 기반 스타일 구조화",
+          "반응형 레이아웃 구현",
+          "JavaScript 기반 간단 인터랙션 적용"
+        ],
+        testAccount: "",
+        live: "https://cozydudeboy.github.io/2025casper/",
+        github: "https://github.com/CozyDudeBoy/2025casper",
+        thumb: THUMBS.casper
+      },
+      {
+        id: "pascucci",
+        badge: "MINI",
+        title: "파스쿠찌 랜딩페이지",
+        desc: "브랜드 콘셉트를 살려 제작한 카페 랜딩페이지 퍼블리싱",
+        period: "2025.09.29 – 2025.10.01",
+        role: "전체 제작",
+        tech: ["HTML", "CSS"],
+        summary:
+          "파스쿠찌 브랜드 톤을 살려 랜딩페이지를 퍼블리싱했습니다. " +
+          "브랜드 컬러/레이아웃/여백을 중심으로 시각적 분위기와 콘텐츠 흐름을 정리했습니다.",
+        features: [
+          "메인 비주얼 및 브랜드 섹션 구성",
+          "CSS 기반 레이아웃/타이포/여백 정리",
+          "기본 반응형 구조 적용",
+          "깔끔한 퍼블리싱 마감"
+        ],
+        testAccount: "",
+        live: "https://cozydudeboy.github.io/passcu/index.html",
+        github: "https://github.com/CozyDudeBoy/passcu",
+        thumb: THUMBS.pascucci
+      }
+    ];
+
+    const TEAM_SLIDES = PROJECTS
+      .filter(p => p.badge === "TEAM")
+      .map(p => ({
+        title: p.title,
+        desc: p.desc,
+        tech: p.tech,
+        live: p.live,
+        github: p.github,
+        thumb: p.thumb
+      }));
+
+    // =========================
+    // utils
+    // =========================
+    const $ = (sel, par=document) => par.querySelector(sel);
+    const $$ = (sel, par=document) => Array.from(par.querySelectorAll(sel));
+
+    function showToast(msg){
+      const t = $("#toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(()=> t.classList.remove("show"), 1800);
+    }
+    function lockScroll(lock){ document.body.style.overflow = lock ? "hidden" : ""; }
+    function escapeHTML(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // =========================
+    // 3) 프로필 링크 바인딩
+    // =========================
+    function bindProfileLinks(){
+      $("#topGithubBtn").href = PROFILE_LINKS.github;
+      $("#heroGithubBtn").href = PROFILE_LINKS.github;
+      $("#contactGithubBtn").href = PROFILE_LINKS.github;
+
+      $("#topResumeBtn").href = PROFILE_LINKS.resume;
+      $("#heroResumeBtn").href = PROFILE_LINKS.resume;
+      $("#contactResumeBtn").href = PROFILE_LINKS.resume;
+
+      $("#emailText").textContent = PROFILE_LINKS.email;
+    }
+
+    // =========================
+    // 4) Projects 렌더링 + 검색
+    // =========================
+    const projectGrid = $("#projectGrid");
+
+    function renderProjects(list){
+      projectGrid.innerHTML = "";
+      if(!list.length){
+        projectGrid.innerHTML = `
+          <div class="muted" style="grid-column:1/-1; padding:14px;">
+            검색 결과가 없습니다.
+          </div>
+        `;
+        return;
+      }
+
+      for(const p of list){
+        const card = document.createElement("article");
+        card.className = "proj-card";
+        card.dataset.id = p.id;
+
+        const tags = p.tech.slice(0,4)
+          .map(t => `<span class="mini-tag">${escapeHTML(t)}</span>`)
+          .join("");
+
+        const badge = `
+          <span class="mini-tag" style="color:#e5e7eb;border-color:rgba(125,211,252,.25);background:rgba(125,211,252,.08)">
+            ${escapeHTML(p.badge)}
+          </span>
+        `;
+
+        card.innerHTML = `
+          <div class="thumb" aria-hidden="true">
+            <img src="${escapeHTML(p.thumb)}" alt="${escapeHTML(p.title)} thumbnail" loading="lazy" />
+          </div>
+          <div class="proj-body">
+            <div class="tag-row" style="margin-bottom:10px;">${badge}</div>
+            <h3 class="proj-title">${escapeHTML(p.title)}</h3>
+            <p class="proj-desc">${escapeHTML(p.desc)}</p>
+            <div class="tag-row">${tags}</div>
+            <div class="proj-actions">
+              <a class="link-btn" href="${escapeHTML(p.live)}" target="_blank" rel="noreferrer">Live</a>
+              <a class="link-btn" href="${escapeHTML(p.github)}" target="_blank" rel="noreferrer">GitHub</a>
+              <button class="link-btn detail" type="button" data-open="modal">Detail</button>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", (e)=>{
+          const openBtn = e.target.closest('[data-open="modal"]');
+          if(e.target.tagName === "A") return;
+          if(openBtn || e.currentTarget === card){
+            openProjectModal(p.id);
+          }
+        });
+
+        projectGrid.appendChild(card);
+      }
+    }
+
+    function filterProjects(keyword){
+      const q = keyword.trim().toLowerCase();
+      if(!q) return PROJECTS;
+      return PROJECTS.filter(p=>{
+        const hay = [
+          p.badge, p.title, p.desc, p.period, p.role,
+          p.tech.join(" "),
+          p.features.join(" "),
+          p.summary,
+          (p.testAccount || "")
+        ].join(" ").toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    // =========================
+    // 5) Modal
+    // =========================
+    const overlay = $("#modalOverlay");
+
+    function openProjectModal(id){
+      const p = PROJECTS.find(x=>x.id===id);
+      if(!p) return;
+
+      $("#modalTitle").textContent = p.title;
+      $("#modalMeta").textContent = `${p.period} · ${p.role}`;
+      $("#modalSummary").textContent = p.summary;
+
+      // ✅ 모달 이미지 (썸네일만)
+      const shot = $("#modalShot");
+      shot.innerHTML = `<img src="${escapeHTML(p.thumb)}" alt="${escapeHTML(p.title)} preview" />`;
+
+      // Test account
+      const testWrap = $("#modalTestWrap");
+      const testBox = $("#modalTest");
+      if(p.testAccount && p.testAccount.trim()){
+        testWrap.style.display = "";
+        testBox.innerHTML = `<b>계정</b><br>${escapeHTML(p.testAccount).replaceAll("\n","<br>")}`;
+      } else {
+        testWrap.style.display = "none";
+        testBox.textContent = "";
+      }
+
+      $("#modalFeatures").innerHTML = p.features.map(x=>`<li>${escapeHTML(x)}</li>`).join("");
+      $("#modalTech").innerHTML = p.tech.map(x=>`<span class="mini-tag">${escapeHTML(x)}</span>`).join("");
+
+      $("#modalLive").href = p.live;
+      $("#modalGithub").href = p.github;
+
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
+      lockScroll(true);
+    }
+
+    function closeModal(){
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+      lockScroll(false);
+    }
+
+    $("#closeModal").addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeModal(); });
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape" && overlay.classList.contains("show")) closeModal();
+    });
+
+    // =========================
+    // 6) Team Slider
+    // =========================
+    const track = $("#sliderTrack");
+    const dotsWrap = $("#sliderDots");
+    let slideIndex = 0;
+
+    function renderSlides(){
+      track.innerHTML = "";
+      dotsWrap.innerHTML = "";
+
+      TEAM_SLIDES.forEach((s, idx)=>{
+        const slide = document.createElement("div");
+        slide.className = "slide";
+        slide.innerHTML = `
+          <div class="shot" aria-hidden="true">
+            <img src="${escapeHTML(s.thumb)}" alt="${escapeHTML(s.title)} thumbnail" loading="lazy" />
+          </div>
+          <div>
+            <h3>${escapeHTML(s.title)}</h3>
+            <p>${escapeHTML(s.desc)}</p>
+            <div class="tag-row" style="margin-bottom:12px;">
+              ${s.tech.map(x=>`<span class="mini-tag">${escapeHTML(x)}</span>`).join("")}
+            </div>
+            <div class="proj-actions" style="max-width:420px;">
+              <a class="link-btn" href="${escapeHTML(s.live)}" target="_blank" rel="noreferrer">Live</a>
+              <a class="link-btn detail" href="${escapeHTML(s.github)}" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+        `;
+        track.appendChild(slide);
+
+        const d = document.createElement("button");
+        d.className = "dot" + (idx === 0 ? " active" : "");
+        d.type = "button";
+        d.setAttribute("aria-label", `go to slide ${idx+1}`);
+        d.addEventListener("click", ()=> goToSlide(idx));
+        dotsWrap.appendChild(d);
+      });
+
+      goToSlide(0, true);
+    }
+
+    function goToSlide(i, instant=false){
+      slideIndex = (i + TEAM_SLIDES.length) % TEAM_SLIDES.length;
+      track.style.transition = instant ? "none" : "transform .35s ease";
+      track.style.transform = `translateX(${-slideIndex * 100}%)`;
+      $$(".dot", dotsWrap).forEach((d, idx)=> d.classList.toggle("active", idx===slideIndex));
+    }
+
+    $("#prevSlide").addEventListener("click", ()=> goToSlide(slideIndex - 1));
+    $("#nextSlide").addEventListener("click", ()=> goToSlide(slideIndex + 1));
+    window.addEventListener("keydown", (e)=>{
+      if(overlay.classList.contains("show")) return;
+      if(e.key === "ArrowLeft") goToSlide(slideIndex - 1);
+      if(e.key === "ArrowRight") goToSlide(slideIndex + 1);
+    });
+
+    // =========================
+    // 7) Contact 폼 (데모)
+    // =========================
+    $("#contactForm").addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const name = $("#name").value.trim();
+      const email = $("#email").value.trim();
+      const msg = $("#message").value.trim();
+
+      if(!name) return showToast("이름을 입력해줘!");
+      if(!email || !email.includes("@")) return showToast("이메일 형식이 올바르지 않아!");
+      if(msg.length < 5) return showToast("메시지를 5자 이상 작성해줘!");
+
+      showToast("데모 전송 완료! (실제 전송은 아님)");
+      e.target.reset();
+    });
+
+    $("#copyEmailBtn").addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(PROFILE_LINKS.email);
+        showToast("이메일 복사 완료!");
+      }catch{
+        showToast("복사가 막혀있어. 직접 복사해줘!");
+      }
+    });
+
+    // =========================
+    // 8) 검색
+    // =========================
+    const searchInput = $("#projectSearch");
+    $("#resetSearchBtn").addEventListener("click", ()=>{
+      searchInput.value = "";
+      renderProjects(PROJECTS);
+      showToast("검색 초기화!");
+    });
+    searchInput.addEventListener("input", ()=> renderProjects(filterProjects(searchInput.value)));
+
+    // =========================
+    // init
+    // =========================
+    $("#year").textContent = new Date().getFullYear();
+    bindProfileLinks();
+    renderProjects(PROJECTS);
+    renderSlides();
+  </script>
+</body>
+</html>
