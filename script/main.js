@@ -3,7 +3,7 @@
 // =========================
 const PROFILE_LINKS = {
   github: "https://github.com/CozyDudeBoy",
-  resume: "https://drive.google.com/drive/folders/1E2dSRAc49BwO6jxfQUTkBtAp-VMZX5sc",
+  resume: "./assets/resume.pdf",
   email: "ihatethiscode999@gmail.com"
 };
 
@@ -31,102 +31,202 @@ const PROJECTS = [
     role: "개발 (프론트 30% · 백엔드 70%)",
     tech: ["React", "Sass", "MySQL"],
     summary:
-      "PING은 디자인 이미지 위에 좌표 기반 핀을 생성해 질문/답변을 남길 수 있는 피드백 플랫폼입니다. " +
-      "서비스 흐름(업로드 → 탐색 → 디테일 → 핀 기반 Q&A)을 고려해 기능을 설계했고, 백엔드/DB 구조를 중심으로 구현했습니다.",
-    features: [
-      "핀(좌표) 기반 피드백 흐름 설계 및 구현",
-      "게시물·핀·답변 관계형 데이터 구조 설계/연동",
-      "서비스형 구조(관리자/사용자 플로우) 기반 화면 구성",
-      "배포 환경에서 동작하는 실사용 링크 제공"
+      "이미지 위 좌표 기반 핀을 생성해 질문/답변을 연결하는 피드백 플랫폼",
+    descDetail:
+      "디자인 피드백 과정에서 발생하는 '어디를 말하는지 불명확한 문제'를 해결하기 위해 제작한 서비스입니다. " +
+      "이미지 좌표 기반으로 핀을 생성하고 질문/답변을 연결하는 구조를 설계했습니다.",
+
+    roleDetail: [
+      "DB 설계 및 테이블 관계 구조 직접 설계",
+      "핀 좌표(x, y) 저장 및 렌더링 로직 구현",
+      "JWT 기반 로그인/인증 처리",
+      "게시물 → 핀 → 답변 흐름 API 설계"
     ],
-    testAccount: "관리자: admin / 1234\n사용자: user1, user2, user3 / 1234",
+
+    trouble: [
+      "좌표 기반 핀 위치 오차 문제 → % 좌표 방식으로 해결",
+      "게시물/핀/답변 관계 설계 충돌 → ERD 재구성",
+      "배포 환경 DB 연결 오류 → 환경 설정 수정"
+    ],
+
+    learn: [
+      "데이터 구조 설계의 중요성 체감",
+      "좌표 기반 인터랙션 설계 경험",
+      "서비스 흐름 설계 경험"
+    ],
+
+    features: [
+      "핀(좌표) 기반 피드백 시스템",
+      "게시물·핀·답변 관계형 구조",
+      "관리자/사용자 기능 분리",
+      "실서비스 배포"
+    ],
+
+    testAccount: "관리자 : admin / 1234 (admin 페이지는 주소 끝에 admin을 추가해주세요 ) 유저 : user1/1234 , user2/1234",
     live: "https://web-ping-frontend-mkvwe63p223f9070.sel3.cloudtype.app/",
-    github: "https://github.com/Kwag-hoon/react-ping",
+    githubFront: "https://github.com/CozyDudeBoy/ping_frontend",
+    githubBack: "https://github.com/CozyDudeBoy/ping_backend",
     thumb: THUMBS.ping
   },
+
   {
     id: "webzen",
     badge: "TEAM",
     title: "Webzen 게임사이트 리뉴얼",
-    desc: "PHP·MySQL 기반 게시판/FAQ 및 관리자 기능을 구현한 게임 포털 리뉴얼",
+    desc: "PHP·MySQL 기반 게시판 및 관리자 기능 구현",
     period: "2025.11.11 – 2025.12.12",
     role: "백엔드 개발",
-    tech: ["PHP", "MySQL", "Bootstrap", "Sass", "JavaScript"],
+    tech: ["PHP", "MySQL", "Bootstrap"],
     summary:
-      "Webzen 게임 포털 사이트를 리뉴얼하며 사용자/관리자 구조를 포함한 기능을 구현했습니다. " +
-      "PHP와 MySQL을 기반으로 CRUD(게시판/FAQ) 로직과 데이터 연동을 구성해 서비스 운영 형태를 재현했습니다.",
-    features: [
-      "MySQL 기반 DB 설계 및 테이블 관계 구성",
-      "게시판·FAQ CRUD 기능 구현 (등록/수정/삭제/조회)",
-      "관리자 로그인 및 권한 분리(운영 구조) 구현",
-      "Bootstrap·Sass 기반 UI 구조 정리"
+      "사용자/관리자 기능을 포함한 게임 포털 구조 구현",
+    descDetail:
+      "게임 포털 사이트를 실제 서비스 구조로 구현한 프로젝트입니다. " +
+      "게시판과 관리자 기능을 포함해 운영 흐름을 고려했습니다.",
+
+    roleDetail: [
+      "MySQL 테이블 구조 설계",
+      "게시판/FAQ CRUD 구현",
+      "관리자 권한 분리",
+      "데이터 연동 처리"
     ],
-    testAccount: "관리자: admin / 1234",
+
+    trouble: [
+      "데이터 관계 충돌 → 테이블 재설계",
+      "권한 처리 오류 → 로직 분리",
+      "폼 데이터 처리 문제 → 요청 흐름 수정"
+    ],
+
+    learn: [
+      "CRUD 구조 이해",
+      "관리자 시스템 경험",
+      "데이터 흐름 설계 능력 향상"
+    ],
+
+    features: [
+      "게시판 CRUD",
+      "FAQ 기능",
+      "관리자 기능",
+      "DB 연동"
+    ],
+
+    testAccount: "admin / 1234",
     live: "https://ihatethiscode.dothome.co.kr/webzen/",
     github: "https://github.com/kmrjsals-ops/project",
     thumb: THUMBS.webzen
   },
+
   {
     id: "koreanair",
     badge: "PERSONAL",
-    title: "대한항공 리뉴얼 랜딩페이지",
-    desc: "대한항공 메인 랜딩을 기준으로 정보 구조/가독성을 개선해 리뉴얼한 퍼블리싱 프로젝트",
-    period: "2025.09.10 – 2025.09.26",
+    title: "대한항공 랜딩페이지",
+    desc: "정보 구조 개선 중심 랜딩 리뉴얼",
+    period: "2025.09",
     role: "전체 제작",
     tech: ["HTML", "CSS", "JavaScript"],
     summary:
-      "대한항공 공식 사이트를 기반으로 메인 랜딩페이지를 리뉴얼했습니다. " +
-      "메인 비주얼/검색 영역/프로모션 섹션을 재구성해 콘텐츠 밀도를 조절하고, 자연스러운 시선 흐름을 목표로 제작했습니다.",
-    features: [
-      "메인 히어로/프로모션 섹션 레이아웃 재구성",
-      "카드 UI 정리 및 가독성 중심 타이포/여백 개선",
-      "JavaScript 기반 간단 인터랙션 적용",
-      "반응형 레이아웃 구성"
+      "기존 사이트를 분석해 UI/UX 개선 중심으로 리뉴얼",
+    descDetail:
+      "대한항공 사이트를 분석해 정보 구조와 가독성을 개선한 프로젝트입니다.",
+
+    roleDetail: [
+      "레이아웃 구조 설계",
+      "퍼블리싱 구현",
+      "인터랙션 구현",
+      "반응형 설계"
     ],
+
+    trouble: [
+      "정보 과다 → 구조 재배치",
+      "레이아웃 깨짐 → grid 재설계"
+    ],
+
+    learn: [
+      "정보 구조 설계 경험",
+      "UI 흐름 중요성 이해"
+    ],
+
+    features: [
+      "랜딩 UI 구조 개선",
+      "반응형 디자인",
+      "인터랙션"
+    ],
+
     testAccount: "",
     live: "https://ihatethiscode.dothome.co.kr/project1/",
     github: "https://github.com/CozyDudeBoy/p1_koreanair",
     thumb: THUMBS.koreanair
   },
+
   {
     id: "casper",
     badge: "MINI",
-    title: "현대 캐스퍼 랜딩페이지",
-    desc: "캐스퍼 온라인 구매 사이트를 참고해 제품 소개 중심의 랜딩을 간단 구현",
-    period: "2025.11.06 – 2025.11.13",
+    title: "캐스퍼 랜딩페이지",
+    desc: "제품 소개 중심 랜딩 구현",
+    period: "2025.11",
     role: "전체 제작",
-    tech: ["HTML", "CSS", "SCSS", "JavaScript", "PHP"],
+    tech: ["HTML", "SCSS", "JavaScript"],
     summary:
-      "캐스퍼 온라인 구매 사이트를 참고해 제품 소개 중심의 랜딩페이지를 제작했습니다. " +
-      "섹션 구성과 시각적 흐름을 정리하고, SCSS로 스타일 구조를 정돈했습니다.",
-    features: [
-      "메인 비주얼/특징 섹션/구매 유도 CTA 구성",
-      "SCSS 기반 스타일 구조화",
-      "반응형 레이아웃 구현",
-      "JavaScript 기반 간단 인터랙션 적용"
+      "제품 중심 구조 랜딩페이지 제작",
+    descDetail:
+      "제품 특징과 구매 유도 흐름을 중심으로 구성한 랜딩페이지입니다.",
+
+    roleDetail: [
+      "UI 구조 설계",
+      "SCSS 구조화",
+      "반응형 구현"
     ],
+
+    trouble: [
+      "레이아웃 정렬 문제 → 구조 수정"
+    ],
+
+    learn: [
+      "랜딩 흐름 설계 경험"
+    ],
+
+    features: [
+      "제품 소개 UI",
+      "반응형",
+      "스타일 구조화"
+    ],
+
     testAccount: "",
     live: "https://cozydudeboy.github.io/2025casper/",
     github: "https://github.com/CozyDudeBoy/2025casper",
     thumb: THUMBS.casper
   },
+
   {
     id: "pascucci",
     badge: "MINI",
     title: "파스쿠찌 랜딩페이지",
-    desc: "브랜드 콘셉트를 살려 제작한 카페 랜딩페이지 퍼블리싱",
-    period: "2025.09.29 – 2025.10.01",
+    desc: "브랜드 중심 퍼블리싱",
+    period: "2025.10",
     role: "전체 제작",
     tech: ["HTML", "CSS"],
     summary:
-      "파스쿠찌 브랜드 톤을 살려 랜딩페이지를 퍼블리싱했습니다. " +
-      "브랜드 컬러/레이아웃/여백을 중심으로 시각적 분위기와 콘텐츠 흐름을 정리했습니다.",
-    features: [
-      "메인 비주얼 및 브랜드 섹션 구성",
-      "CSS 기반 레이아웃/타이포/여백 정리",
-      "기본 반응형 구조 적용",
-      "깔끔한 퍼블리싱 마감"
+      "브랜드 톤 중심 UI 제작",
+    descDetail:
+      "브랜드 컬러와 분위기를 살려 제작한 랜딩페이지입니다.",
+
+    roleDetail: [
+      "퍼블리싱",
+      "레이아웃 구성"
     ],
+
+    trouble: [
+      "디자인 정렬 문제 → 구조 수정"
+    ],
+
+    learn: [
+      "브랜드 표현 경험"
+    ],
+
+    features: [
+      "브랜드 UI",
+      "레이아웃"
+    ],
+
     testAccount: "",
     live: "https://cozydudeboy.github.io/passcu/index.html",
     github: "https://github.com/CozyDudeBoy/passcu",
@@ -141,7 +241,7 @@ const TEAM_SLIDES = PROJECTS
     desc: p.desc,
     tech: p.tech,
     live: p.live,
-    github: p.github,
+    github: p.githubFront || p.github || "",
     thumb: p.thumb
   }));
 
@@ -158,7 +258,11 @@ function showToast(msg) {
   clearTimeout(showToast._timer);
   showToast._timer = setTimeout(() => t.classList.remove("show"), 1800);
 }
-function lockScroll(lock) { document.body.style.overflow = lock ? "hidden" : ""; }
+
+function lockScroll(lock) {
+  document.body.style.overflow = lock ? "hidden" : "";
+}
+
 function escapeHTML(str) {
   return String(str)
     .replaceAll("&", "&amp;")
@@ -190,12 +294,13 @@ const projectGrid = $("#projectGrid");
 
 function renderProjects(list) {
   projectGrid.innerHTML = "";
+
   if (!list.length) {
     projectGrid.innerHTML = `
-          <div class="muted" style="grid-column:1/-1; padding:14px;">
-            검색 결과가 없습니다.
-          </div>
-        `;
+      <div class="muted" style="grid-column:1/-1; padding:14px;">
+        검색 결과가 없습니다.
+      </div>
+    `;
     return;
   }
 
@@ -209,27 +314,29 @@ function renderProjects(list) {
       .join("");
 
     const badge = `
-          <span class="mini-tag" style="color:#e5e7eb;border-color:rgba(125,211,252,.25);background:rgba(125,211,252,.08)">
-            ${escapeHTML(p.badge)}
-          </span>
-        `;
+      <span class="mini-tag" style="color:#e5e7eb;border-color:rgba(125,211,252,.25);background:rgba(125,211,252,.08)">
+        ${escapeHTML(p.badge)}
+      </span>
+    `;
+
+    const cardGithub = p.githubFront || p.github || "#";
 
     card.innerHTML = `
-          <div class="thumb" aria-hidden="true">
-            <img src="${escapeHTML(p.thumb)}" alt="" loading="lazy" />
-          </div>
-          <div class="proj-body">
-            <div class="tag-row" style="margin-bottom:10px;">${badge}</div>
-            <h3 class="proj-title">${escapeHTML(p.title)}</h3>
-            <p class="proj-desc">${escapeHTML(p.desc)}</p>
-            <div class="tag-row">${tags}</div>
-            <div class="proj-actions">
-              <a class="link-btn" href="${escapeHTML(p.live)}" target="_blank" rel="noreferrer">Live</a>
-              <a class="link-btn" href="${escapeHTML(p.github)}" target="_blank" rel="noreferrer">GitHub</a>
-              <button class="link-btn detail" type="button" data-open="modal">Detail</button>
-            </div>
-          </div>
-        `;
+      <div class="thumb" aria-hidden="true">
+        <img src="${escapeHTML(p.thumb)}" alt="" loading="lazy" />
+      </div>
+      <div class="proj-body">
+        <div class="tag-row" style="margin-bottom:10px;">${badge}</div>
+        <h3 class="proj-title">${escapeHTML(p.title)}</h3>
+        <p class="proj-desc">${escapeHTML(p.desc)}</p>
+        <div class="tag-row">${tags}</div>
+        <div class="proj-actions">
+          <a class="link-btn" href="${escapeHTML(p.live)}" target="_blank" rel="noreferrer">Live</a>
+          <a class="link-btn" href="${escapeHTML(cardGithub)}" target="_blank" rel="noreferrer">GitHub</a>
+          <button class="link-btn detail" type="button" data-open="modal">Detail</button>
+        </div>
+      </div>
+    `;
 
     card.addEventListener("click", (e) => {
       const openBtn = e.target.closest('[data-open="modal"]');
@@ -246,14 +353,23 @@ function renderProjects(list) {
 function filterProjects(keyword) {
   const q = keyword.trim().toLowerCase();
   if (!q) return PROJECTS;
+
   return PROJECTS.filter(p => {
     const hay = [
-      p.badge, p.title, p.desc, p.period, p.role,
+      p.badge,
+      p.title,
+      p.desc,
+      p.period,
+      p.role,
       p.tech.join(" "),
       p.features.join(" "),
       p.summary,
+      p.github || "",
+      p.githubFront || "",
+      p.githubBack || "",
       (p.testAccount || "")
     ].join(" ").toLowerCase();
+
     return hay.includes(q);
   });
 }
@@ -274,17 +390,34 @@ function openProjectModal(id) {
   const p = PROJECTS.find(x => x.id === id);
   if (!p) return;
 
+  // 기본 정보
   $("#modalTitle").textContent = p.title;
   $("#modalMeta").textContent = `${p.period} · ${p.role}`;
   $("#modalSummary").textContent = p.summary;
 
-  // ✅ 모달 이미지 (썸네일만)
+  // 상세 영역
+  $("#modalDesc").textContent = p.descDetail || "";
+
+  $("#modalRole").innerHTML = (p.roleDetail || [])
+    .map(x => `<li>${escapeHTML(x)}</li>`)
+    .join("");
+
+  $("#modalTrouble").innerHTML = (p.trouble || [])
+    .map(x => `<li>${escapeHTML(x)}</li>`)
+    .join("");
+
+  $("#modalLearn").innerHTML = (p.learn || [])
+    .map(x => `<li>${escapeHTML(x)}</li>`)
+    .join("");
+
+  // 이미지
   const shot = $("#modalShot");
   shot.innerHTML = `<img src="${escapeHTML(p.thumb)}" alt="${escapeHTML(p.title)}의 상세 스크린샷" />`;
 
-  // Test account
+  // 테스트 계정
   const testWrap = $("#modalTestWrap");
   const testBox = $("#modalTest");
+
   if (p.testAccount && p.testAccount.trim()) {
     testWrap.style.display = "";
     testBox.innerHTML = `<b>계정</b><br>${escapeHTML(p.testAccount).replaceAll("\n", "<br>")}`;
@@ -293,17 +426,51 @@ function openProjectModal(id) {
     testBox.textContent = "";
   }
 
-  $("#modalFeatures").innerHTML = p.features.map(x => `<li>${escapeHTML(x)}</li>`).join("");
-  $("#modalTech").innerHTML = p.tech.map(x => `<span class="mini-tag">${escapeHTML(x)}</span>`).join("");
+  // 기능 / 기술
+  $("#modalFeatures").innerHTML = (p.features || [])
+    .map(x => `<li>${escapeHTML(x)}</li>`)
+    .join("");
 
-  $("#modalLive").href = p.live;
-  $("#modalGithub").href = p.github;
+  $("#modalTech").innerHTML = (p.tech || [])
+    .map(x => `<span class="mini-tag">${escapeHTML(x)}</span>`)
+    .join("");
 
+  // 링크
+  const liveBtn = $("#modalLive");
+  const githubBtn = $("#modalGithub");
+  const githubFrontBtn = $("#modalGithubFront");
+  const githubBackBtn = $("#modalGithubBack");
+
+  liveBtn.href = p.live || "#";
+
+  // 일단 모두 숨김
+  if (githubBtn) githubBtn.style.display = "none";
+  if (githubFrontBtn) githubFrontBtn.style.display = "none";
+  if (githubBackBtn) githubBackBtn.style.display = "none";
+
+  // ping처럼 front/back이 있는 경우
+  if (p.githubFront || p.githubBack) {
+    if (githubFrontBtn && p.githubFront) {
+      githubFrontBtn.style.display = "";
+      githubFrontBtn.href = p.githubFront;
+    }
+
+    if (githubBackBtn && p.githubBack) {
+      githubBackBtn.style.display = "";
+      githubBackBtn.href = p.githubBack;
+    }
+  } else if (githubBtn && p.github) {
+    // 일반 프로젝트는 기존 GitHub 버튼 하나만
+    githubBtn.style.display = "";
+    githubBtn.href = p.github;
+  }
+
+  // 모달 열기
   overlay.classList.add("show");
   overlay.setAttribute("aria-hidden", "false");
   lockScroll(true);
 
-  // Focus management
+  // 포커스 관리
   lastFocusedElement = document.activeElement;
   const firstFocusable = getFocusableElements(overlay)[0];
   if (firstFocusable) firstFocusable.focus();
@@ -318,15 +485,23 @@ function closeModal() {
 }
 
 $("#closeModal").addEventListener("click", closeModal);
-overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) closeModal();
+});
+
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && overlay.classList.contains("show")) closeModal();
+  if (e.key === "Escape" && overlay.classList.contains("show")) {
+    closeModal();
+  }
 
   // Focus trap
   if (e.key === "Tab" && overlay.classList.contains("show")) {
     const focusables = getFocusableElements(overlay);
     const first = focusables[0];
     const last = focusables[focusables.length - 1];
+
+    if (!first || !last) return;
 
     if (e.shiftKey) {
       if (document.activeElement === first) {
@@ -357,21 +532,21 @@ function renderSlides() {
     const slide = document.createElement("div");
     slide.className = "slide";
     slide.innerHTML = `
-          <div class="shot" aria-hidden="true">
-            <img src="${escapeHTML(s.thumb)}" alt="" loading="lazy" />
-          </div>
-          <div>
-            <h3>${escapeHTML(s.title)}</h3>
-            <p>${escapeHTML(s.desc)}</p>
-            <div class="tag-row" style="margin-bottom:12px;">
-              ${s.tech.map(x => `<span class="mini-tag">${escapeHTML(x)}</span>`).join("")}
-            </div>
-            <div class="proj-actions" style="max-width:420px;">
-              <a class="link-btn" href="${escapeHTML(s.live)}" target="_blank" rel="noreferrer">Live</a>
-              <a class="link-btn detail" href="${escapeHTML(s.github)}" target="_blank" rel="noreferrer">GitHub</a>
-            </div>
-          </div>
-        `;
+      <div class="shot" aria-hidden="true">
+        <img src="${escapeHTML(s.thumb)}" alt="" loading="lazy" />
+      </div>
+      <div>
+        <h3>${escapeHTML(s.title)}</h3>
+        <p>${escapeHTML(s.desc)}</p>
+        <div class="tag-row" style="margin-bottom:12px;">
+          ${s.tech.map(x => `<span class="mini-tag">${escapeHTML(x)}</span>`).join("")}
+        </div>
+        <div class="proj-actions" style="max-width:420px;">
+          <a class="link-btn" href="${escapeHTML(s.live)}" target="_blank" rel="noreferrer">Live</a>
+          <a class="link-btn detail" href="${escapeHTML(s.github || "#")}" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+    `;
     track.appendChild(slide);
 
     const d = document.createElement("button");
@@ -389,11 +564,15 @@ function goToSlide(i, instant = false) {
   slideIndex = (i + TEAM_SLIDES.length) % TEAM_SLIDES.length;
   track.style.transition = instant ? "none" : "transform .35s ease";
   track.style.transform = `translateX(${-slideIndex * 100}%)`;
-  $$(".dot", dotsWrap).forEach((d, idx) => d.classList.toggle("active", idx === slideIndex));
+
+  $$(".dot", dotsWrap).forEach((d, idx) => {
+    d.classList.toggle("active", idx === slideIndex);
+  });
 }
 
 $("#prevSlide").addEventListener("click", () => goToSlide(slideIndex - 1));
 $("#nextSlide").addEventListener("click", () => goToSlide(slideIndex + 1));
+
 window.addEventListener("keydown", (e) => {
   if (overlay.classList.contains("show")) return;
   if (e.key === "ArrowLeft") goToSlide(slideIndex - 1);
@@ -405,6 +584,7 @@ window.addEventListener("keydown", (e) => {
 // =========================
 $("#contactForm").addEventListener("submit", (e) => {
   e.preventDefault();
+
   const name = $("#name").value.trim();
   const email = $("#email").value.trim();
   const msg = $("#message").value.trim();
@@ -430,12 +610,16 @@ $("#copyEmailBtn").addEventListener("click", async () => {
 // 8) 검색
 // =========================
 const searchInput = $("#projectSearch");
+
 $("#resetSearchBtn").addEventListener("click", () => {
   searchInput.value = "";
   renderProjects(PROJECTS);
   showToast("검색 초기화!");
 });
-searchInput.addEventListener("input", () => renderProjects(filterProjects(searchInput.value)));
+
+searchInput.addEventListener("input", () => {
+  renderProjects(filterProjects(searchInput.value));
+});
 
 // =========================
 // init
@@ -444,3 +628,22 @@ $("#year").textContent = new Date().getFullYear();
 bindProfileLinks();
 renderProjects(PROJECTS);
 renderSlides();
+
+const topBtn = document.getElementById("topBtn");
+
+// 스크롤 시 버튼 표시
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    topBtn.classList.add("show");
+  } else {
+    topBtn.classList.remove("show");
+  }
+});
+
+// 클릭 시 상단 이동
+topBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});

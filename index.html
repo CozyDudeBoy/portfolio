@@ -7,9 +7,12 @@
   <title>CozyDudeBoy | Portfolio</title>
   <meta name="description" content="프로젝트 링크를 한 페이지에 정리한 포트폴리오 원페이지" />
   <link rel="stylesheet" href="./css/main.css" type="text/css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/favicon.png">
 
 </head>
-
+<button id="topBtn" aria-label="맨 위로 이동">↑</button>
 <body>
   <a href="#main-content" class="skip-link">본문 바로가기</a>
   <!-- Topbar -->
@@ -45,8 +48,34 @@
         <div>
           <div class="kicker"><span class="spark"></span> Frontend Developer · UI / UX</div>
           <h1>사용자 경험을 설계하는 프론트엔드 개발자 <br> 정하영입니다</h1>
-          <p>
-            Frontend Developer · UI / UX
+            <p>
+            UI/UX를 이해하고, 단순한 화면 구현을 넘어 실제 서비스 구조까지 설계하고 구현하는 프론트엔드 개발자입니다.<br><br>
+
+            React 기반 프로젝트 PING에서는 이미지 좌표를 기반으로 핀을 생성하고 질문과 답변을 연결하는 기능을 구현하며,
+            DB 설계, API 구조, 인증 처리까지 포함한 전체 흐름을 직접 설계하고 개발했습니다.
+            이 과정을 통해 “기능 구현”보다 중요한 것은 데이터 구조와 서비스 흐름이라는 것을 체감했습니다.<br><br>
+
+            또한 대한항공, 캐스퍼, 파스쿠찌 랜딩페이지 프로젝트를 통해
+            정보 구조를 재정리하고 사용자 시선 흐름을 고려한 UI 설계 경험을 쌓았습니다.
+            단순히 디자인을 구현하는 것이 아니라, 사용자가 정보를 더 빠르고 명확하게 이해할 수 있도록 구조를 개선하는 데 집중했습니다.<br><br>
+
+            Webzen 팀 프로젝트에서는 PHP·MySQL 기반으로 게시판과 관리자 기능을 구현하며,
+            CRUD 구조와 권한 분리, 데이터 흐름 설계를 경험했습니다.<br><br>
+
+            이러한 경험을 바탕으로,
+            저는 “어떻게 만들 것인가”보다 “왜 이렇게 설계해야 하는가”를 고민하며 개발하는 것을 중요하게 생각합니다.<br><br>
+
+            기능 구현을 넘어서 사용자 경험과 데이터 구조를 함께 설계하는 개발자로 성장하고 있습니다.
+            </p>
+
+        </div>
+
+        <!-- ✅ 원본 hero-card 구조 유지 (preview + mini 그대로) -->
+        <aside class="hero-card" aria-label="highlight card">
+          <div class="preview" aria-hidden="true"></div>
+            <p>
+              <br>
+              Frontend Developer · UI / UX
             <br>
             <br>
             정하영
@@ -57,23 +86,8 @@
             <br>
             서울시 금천구
             <br>
-            <br>
-            UI/UX를 이해하고 React 기반으로 실제 서비스 구조를 설계하고 구현합니다.
-            <br>
-            팀 프로젝트와 개인 프로젝트를 통해
-            DB 모델링, REST API 연동, 인증 처리, <br>상태 관리 구조 설계를 경험했습니다.
-            <br>
-            <br>
-            기능 구현을 넘어,
-            사용자 경험과 코드 구조를 함께 설계하는 개발자를 지향합니다.
 
           </p>
-
-        </div>
-
-        <!-- ✅ 원본 hero-card 구조 유지 (preview + mini 그대로) -->
-        <aside class="hero-card" aria-label="highlight card">
-          <div class="preview" aria-hidden="true"></div>
           <div class="cta-row">
             <a class="btn primary" href="#projects">View Projects</a>
             <a class="btn" href="#" id="heroGithubBtn" target="_blank" rel="noreferrer">GitHub</a>
@@ -130,61 +144,65 @@
       </div>
     </section>
 
-    <!-- Skills -->
-    <section id="skills">
-      <div class="container">
-        <div class="section-title">
-          <h2>Skills</h2>
-          <p>퍼센트 대신 실제 사용한 스택을 정리했습니다.</p>
+<!-- Skills -->
+<section id="skills">
+  <div class="container">
+    <div class="section-title">
+      <h2>Skills</h2>
+      <p>실제 프로젝트에서 사용하며 구현한 기술 중심으로 정리했습니다.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- LEFT -->
+      <div class="panel pad">
+        <h3 style="margin:0 0 8px;">Frontend</h3>
+        <div class="skill-box">
+          <span class="tag">HTML / CSS → 반응형 레이아웃 및 UI 퍼블리싱</span>
+          <span class="tag">SCSS / Sass → 스타일 구조화 및 유지보수</span>
+          <span class="tag">JavaScript → DOM 제어 및 인터랙션 구현</span>
+          <span class="tag">jQuery → 이벤트 처리 및 기능 구현 경험</span>
+          <span class="tag">React → 컴포넌트 기반 구조 설계 및 상태 관리</span>
         </div>
 
-        <div class="grid-2">
-          <div class="panel pad">
-            <h3 style="margin:0 0 8px;">Frontend</h3>
-            <div class="skill-box">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">SCSS / Sass</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">JQuery</span>
-              <span class="tag">React</span>
-            </div>
+        <div class="divider"></div>
 
-            <div class="divider"></div>
-
-            <h3 style="margin:0 0 8px;">Backend</h3>
-            <div class="skill-box">
-              <span class="tag">PHP</span>
-              <span class="tag">MySQL</span>
-              <span class="tag">CRUD</span>
-              <span class="tag">Auth / Admin</span>
-            </div>
-          </div>
-
-          <div class="panel pad">
-            <h3 style="margin:0 0 8px;">Tools</h3>
-            <div class="skill-box">
-              <span class="tag">Git</span>
-              <span class="tag">GitHub</span>
-              <span class="tag">Figma</span>
-              <span class="tag">Bootstrap</span>
-              <span class="tag">TailWind</span>
-              <span class="tag">Cloudtype</span>
-              <span class="tag">ERD Cloud</span>
-            </div>
-
-            <div class="divider"></div>
-
-            <h3 style="margin:0 0 8px;">What I focus on</h3>
-            <ul class="list">
-              <li>‘보기 좋은 구조’로 정리되는 UI 구성</li>
-              <li>랜딩: 브랜드 톤 유지 + 정보 구조/가독성 개선</li>
-              <li>팀 프로젝트: 흐름(요청→처리→DB→출력) 전체 설계</li>
-            </ul>
-          </div>
+        <h3 style="margin:0 0 8px;">Backend</h3>
+        <div class="skill-box">
+          <span class="tag">PHP → 게시판 및 관리자 기능 구현</span>
+          <span class="tag">MySQL → DB 설계 및 관계 구조 정의</span>
+          <span class="tag">CRUD → 데이터 생성/조회/수정/삭제 구현</span>
+          <span class="tag">Auth / Admin → 로그인 인증 및 권한 분리</span>
         </div>
       </div>
-    </section>
+
+      <!-- RIGHT -->
+      <div class="panel pad">
+        <h3 style="margin:0 0 8px;">Tools</h3>
+        <div class="skill-box">
+          <span class="tag">Git / GitHub → 버전 관리 및 협업</span>
+          <span class="tag">Figma → UI 구조 분석 및 설계</span>
+          <span class="tag">Bootstrap / Tailwind → UI 빠른 구현</span>
+          <span class="tag">Cloudtype → 프론트/백엔드 배포 경험</span>
+          <span class="tag">ERD Cloud → DB 구조 설계 및 시각화</span>
+        </div>
+
+        <div class="divider"></div>
+
+<h3 style="margin:0 0 8px;">What I focus on</h3>
+<ul class="list">
+  <li>사용자의 시선 흐름을 고려해 정보가 자연스럽게 이어지는 UI 구조 설계</li>
+  <li>정보 구조를 기반으로 불필요한 요소를 줄이고 가독성과 전달력을 개선하는 레이아웃 구성</li>
+  <li>요청 → 처리 → DB → 출력까지 이어지는 전체 데이터 흐름을 이해하고 설계</li>
+  <li>기능 구현에 그치지 않고 “왜 이 구조가 필요한지”를 고민하며 개발</li>
+</ul>
+
+<p class="muted" style="margin-top:12px;">
+  * React, HTML/CSS, JavaScript 기반 UI 구현과 PHP·MySQL을 활용한 DB 설계, API 처리까지 프론트엔드와 백엔드를 포함한 전체 서비스 구조를 직접 구현한 경험 보유
+</p>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Projects -->
     <section id="projects">
@@ -286,41 +304,66 @@
     </footer>
   </main>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal__media">
-        <div class="modal__shot" id="modalShot" aria-hidden="true"></div>
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+    <!-- 이미지 영역 -->
+    <div class="modal__media">
+      <div class="modal__shot" id="modalShot" aria-hidden="true"></div>
+    </div>
+
+    <!-- 콘텐츠 영역 -->
+    <div class="modal__content">
+      <div class="modal__top">
+        <div>
+          <h3 id="modalTitle">Project Title</h3>
+          <div class="meta" id="modalMeta">기간 · 역할</div>
+        </div>
+        <button class="xbtn" type="button" id="closeModal" aria-label="close modal">✕</button>
       </div>
-      <div class="modal__content">
-        <div class="modal__top">
-          <div>
-            <h3 id="modalTitle">Project Title</h3>
-            <div class="meta" id="modalMeta">기간 · 역할</div>
-          </div>
-          <button class="xbtn" type="button" id="closeModal" aria-label="close modal">✕</button>
-        </div>
 
-        <p id="modalSummary">프로젝트 요약</p>
+      <!-- 기존 요약 -->
+      <p id="modalSummary">프로젝트 요약</p>
 
-        <div id="modalTestWrap" style="display:none;">
-          <div class="block-title">테스트 계정</div>
-          <div class="kv" id="modalTest"></div>
-        </div>
+      <!-- 🔥 추가 영역 시작 -->
+      <div class="block-title">프로젝트 설명</div>
+      <p id="modalDesc"></p>
 
-        <div class="block-title">핵심 기능</div>
-        <ul class="bullets" id="modalFeatures"></ul>
+      <div class="block-title">내 역할</div>
+      <ul class="bullets" id="modalRole"></ul>
 
-        <div class="block-title">Tech</div>
-        <div class="tag-row" id="modalTech"></div>
+      <div class="block-title">문제 해결</div>
+      <ul class="bullets" id="modalTrouble"></ul>
 
-        <div class="modal__links">
-          <a class="link-btn" id="modalLive" href="#" target="_blank" rel="noreferrer">Live</a>
-          <a class="link-btn detail" id="modalGithub" href="#" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
+      <div class="block-title">배운 점</div>
+      <ul class="bullets" id="modalLearn"></ul>
+      <!-- 🔥 추가 영역 끝 -->
+
+      <!-- 테스트 계정 -->
+      <div id="modalTestWrap" style="display:none;">
+        <div class="block-title">테스트 계정</div>
+        <div class="kv" id="modalTest"></div>
+      </div>
+
+      <!-- 기존 기능 -->
+      <div class="block-title">핵심 기능</div>
+      <ul class="bullets" id="modalFeatures"></ul>
+
+      <!-- 기존 기술 -->
+      <div class="block-title">Tech</div>
+      <div class="tag-row" id="modalTech"></div>
+
+      <!-- 링크 -->
+      <div class="modal__links">
+        <a class="link-btn" id="modalLive" href="#" target="_blank">Live</a>
+        <a class="link-btn detail" id="modalGithubFront" href="#" target="_blank" rel="noreferrer" style="display:none;">Front GitHub</a>
+        <a class="link-btn detail" id="modalGithubBack" href="#" target="_blank" rel="noreferrer" style="display:none;">Back GitHub</a>
+        <a class="link-btn detail" id="modalGithub" href="#" target="_blank" rel="noreferrer" style="display:none;">GitHub</a>
       </div>
     </div>
   </div>
+</div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
