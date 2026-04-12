@@ -1,373 +1,1894 @@
-<!doctype html>
-<html lang="ko">
-
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CozyDudeBoy | Portfolio</title>
-  <meta name="description" content="프로젝트 링크를 한 페이지에 정리한 포트폴리오 원페이지" />
-  <link rel="stylesheet" href="./css/main.css" type="text/css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — CozyDude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon.png">
 <link rel="apple-touch-icon" href="./assets/favicon.png">
+<style>
+/* ===== 3D BACKGROUND ===== */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: opacity 0.5s;
+}
+[data-theme="dark"] #bg-canvas { opacity: 0.6; }
+.main, .side-nav, .theme-toggle, .modal-overlay { position: relative; z-index: 1; }
 
+/* ===== CSS VARIABLES ===== */
+:root {
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Noto Sans KR', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+  --bg-primary: #F5F0EB;
+  --bg-secondary: #EDE7E0;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FFF8F2;
+  --text-primary: #2D2A26;
+  --text-secondary: #6B6560;
+  --text-muted: #9E9893;
+  --border: #DDD5CC;
+  --accent-1: #E8634A;
+  --accent-2: #3B7DD8;
+  --accent-3: #D4A03C;
+  --accent-4: #5BAD7A;
+  --accent-5: #9B6BC2;
+  --accent-glow: rgba(232, 99, 74, 0.15);
+  --nav-bg: rgba(245, 240, 235, 0.85);
+  --badge-team: #3B7DD8;
+  --badge-personal: #5BAD7A;
+  --badge-mini: #D4A03C;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.1);
+  --toggle-bg: #DDD5CC;
+  --toggle-knob: #FFFFFF;
+  --toggle-icon: '☀️';
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1A1A2E;
+  --bg-secondary: #16213E;
+  --bg-card: #222845;
+  --bg-card-hover: #2A3158;
+  --text-primary: #E8E3DC;
+  --text-secondary: #A09B95;
+  --text-muted: #6B6762;
+  --border: #333A55;
+  --accent-1: #FF7B63;
+  --accent-2: #63A4FF;
+  --accent-3: #FFD166;
+  --accent-4: #6FDDAA;
+  --accent-5: #B88AE0;
+  --accent-glow: rgba(255, 123, 99, 0.2);
+  --nav-bg: rgba(26, 26, 46, 0.9);
+  --badge-team: #63A4FF;
+  --badge-personal: #6FDDAA;
+  --badge-mini: #FFD166;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 30px rgba(0,0,0,0.4);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.5);
+  --toggle-bg: #333A55;
+  --toggle-knob: #222845;
+  --toggle-icon: '🌙';
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 40px; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ===== BACKGROUND GRAIN ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== THEME TOGGLE ===== */
+.theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 1000;
+  width: 56px;
+  height: 30px;
+  background: var(--toggle-bg);
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition);
+  padding: 0;
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: var(--toggle-knob);
+  border-radius: 50%;
+  transition: transform var(--transition), background var(--transition);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+[data-theme="dark"] .theme-toggle::after {
+  transform: translateX(26px);
+}
+.theme-toggle .icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  transition: opacity 0.3s;
+  z-index: 1;
+  line-height: 1;
+}
+.theme-toggle .icon-sun { left: 7px; }
+.theme-toggle .icon-moon { right: 7px; }
+[data-theme="light"] .theme-toggle .icon-moon { opacity: 0.3; }
+[data-theme="light"] .theme-toggle .icon-sun { opacity: 1; }
+[data-theme="dark"] .theme-toggle .icon-sun { opacity: 0.3; }
+[data-theme="dark"] .theme-toggle .icon-moon { opacity: 1; }
+
+/* ===== SIDE NAVIGATION ===== */
+.side-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0;
+  transition: background var(--transition), border var(--transition);
+}
+.side-nav .logo {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.side-nav ul { list-style: none; padding: 0 28px; }
+.side-nav li { margin-bottom: 8px; }
+.side-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+  position: relative;
+}
+.side-nav a::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.side-nav a:hover,
+.side-nav a.active {
+  color: var(--text-primary);
+  background: var(--accent-glow);
+}
+.side-nav a.active::before {
+  background: var(--accent-1);
+  box-shadow: 0 0 8px var(--accent-1);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main { margin-left: 200px; }
+
+/* ===== SECTIONS ===== */
+section {
+  min-height: 100vh;
+  padding: 80px 60px;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== HERO / INTRO ===== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-1) 0%, transparent 70%);
+  opacity: 0.08;
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
+  opacity: 0.06;
+  border-radius: 50%;
+  animation: float 10s ease-in-out infinite reverse;
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -30px); }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp 0.8s ease both;
+}
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-4);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s ease 0.15s both;
+}
+.hero h1 .gradient {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-3), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 500px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+  animation: fadeUp 0.8s ease 0.45s both;
+}
+.btn {
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--accent-1);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(232, 99, 74, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 99, 74, 0.4);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+}
+.btn-outline:hover {
+  border-color: var(--accent-1);
+  color: var(--accent-1);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+.scroll-indicator .arrow {
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: rotate(45deg) translate(0,0); }
+  50% { transform: rotate(45deg) translate(4px, 4px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  margin-bottom: 56px;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent-1);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.section-line {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+  border-radius: 2px;
+  margin-top: 16px;
+}
+
+/* ===== SKILLS ===== */
+.skills-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.skill-category-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: all 0.3s;
+  box-shadow: var(--shadow-sm);
+}
+.skill-category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-2);
+}
+.skill-cat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.skill-cat-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.skill-cat-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.skill-cat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ===== PROJECTS ===== */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent-1);
+  border-color: var(--accent-1);
+  color: #fff;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  position: relative;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+.project-thumb {
+  width: 100%;
+  height: 200px;
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-thumb .placeholder-icon {
+  font-size: 48px;
+  opacity: 0.3;
+}
+.project-thumb .badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #fff;
+  letter-spacing: 1px;
+}
+.badge-TEAM { background: var(--badge-team); }
+.badge-PERSONAL { background: var(--badge-personal); }
+.badge-MINI { background: var(--badge-mini); }
+
+.project-info { padding: 24px; }
+.project-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.project-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tech-tag {
+  padding: 4px 10px;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  transition: background 0.3s;
+}
+.project-period {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ===== PROJECT MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.modal-overlay.show {
+  display: flex;
+  opacity: 1;
+}
+.modal {
+  background: var(--bg-card);
+  border-radius: 16px;
+  max-width: 720px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: modalIn 0.35s ease;
+  overflow: hidden;
+}
+.modal-scroll {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.modal-close:hover { background: var(--accent-1); color: #fff; }
+
+.modal-body { padding: 20px 36px 36px; }
+.modal-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.modal-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.modal-section { margin-bottom: 24px; }
+.modal-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-1);
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+}
+.modal-section p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.modal-section ul {
+  list-style: none;
+  padding: 0;
+}
+.modal-section li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+.modal-section li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-1);
+  font-weight: 700;
+}
+
+.modal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.modal-link {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.modal-link.live {
+  background: var(--accent-1);
+  color: #fff;
+}
+.modal-link.live:hover { opacity: 0.85; }
+.modal-link.github {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.modal-link.github:hover { border-color: var(--accent-2); color: var(--accent-2); }
+
+.modal-test-account {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+/* ===== CONTACT ===== */
+.contact-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-text {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all 0.3s;
+  box-shadow: var(--shadow-sm);
+}
+.contact-item:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-2);
+}
+.contact-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.contact-icon.email { background: rgba(232, 99, 74, 0.12); }
+.contact-icon.github-icon { background: rgba(155, 107, 194, 0.12); }
+.contact-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.contact-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ===== ABOUT ME ===== */
+.about-section {
+  background: var(--bg-secondary);
+  transition: background var(--transition);
+}
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.about-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+.about-avatar-wrap {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-avatar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(
+    var(--accent-1),
+    var(--accent-3),
+    var(--accent-2),
+    var(--accent-5),
+    var(--accent-4),
+    var(--accent-1)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ringRotate 4s linear infinite;
+}
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+.about-avatar-inner {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+  transition: background var(--transition);
+}
+[data-theme="dark"] .about-avatar-inner {
+  background: #111128;
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.4);
+}
+.about-avatar-inner .avatar-emoji {
+  font-size: 80px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+}
+
+.about-stats {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  max-width: 320px;
+}
+.about-stat {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s;
+}
+.about-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.about-stat-number {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.about-stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.about-text-area {}
+.about-headline {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.about-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 24px;
+}
+.about-info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.about-info-icon {
+  font-size: 16px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.about-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.about-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s;
+}
+.about-tag:hover {
+  border-color: var(--accent-2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .about-visual { order: -1; }
+  .about-stats { justify-content: center; }
+  .about-tags { justify-content: center; }
+  .about-avatar-wrap { width: 200px; height: 200px; }
+  .about-avatar-inner { width: 175px; height: 175px; }
+  .about-avatar-inner .avatar-emoji { font-size: 60px; }
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .side-nav {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+    border-right: none;
+    border-top: 1px solid var(--border);
+  }
+  .side-nav .logo { display: none; }
+  .side-nav ul {
+    display: flex;
+    padding: 10px 16px;
+    gap: 4px;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .side-nav li { margin: 0; }
+  .side-nav a {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+  .main { margin-left: 0; padding-bottom: 80px; }
+  section { padding: 60px 24px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .skills-category-grid { grid-template-columns: 1fr; }
+  .modal-overlay { padding: 16px; }
+  .modal-body { padding: 0 20px 20px; }
+  .theme-toggle { top: 16px; right: 16px; }
+}
+/* 추가 */
+.avatar-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+.thumb-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.project-thumb img{
+  transition:0.4s;
+}
+
+.project-card:hover img{
+  transform:scale(1.05);
+}
+.modal-slider{
+  position:relative;
+  width:100%;
+  height:260px;
+  overflow:hidden;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+.modal-slider img{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:0.4s;
+}
+
+.modal-slider img.active{
+  opacity:1;
+}
+
+/* 버튼 */
+.slide-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+  border:none;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.prev{ left:10px; }
+.next{ right:10px; }
+
+.top-btn{
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-1);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  z-index: 1500;
+}
+
+.top-btn.show{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.top-btn:hover{
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px){
+  .top-btn{
+    right: 16px;
+    bottom: 96px;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+</style>
 </head>
-<button id="topBtn" aria-label="맨 위로 이동">↑</button>
 <body>
-  <a href="#main-content" class="skip-link">본문 바로가기</a>
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="container topbar__inner">
-      <a class="brand" href="#top" aria-label="Go to top">
-        <span class="brand__dot"></span>
-        <span>CozyDudeBoy</span>
-      </a>
 
-      <nav class="nav" aria-label="page navigation">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#team">Team</a>
-        <a href="#contact">Contact</a>
+<!-- 3D Background Canvas -->
+<canvas id="bg-canvas"></canvas>
 
-        <a class="pill" href="#" id="topGithubBtn" target="_blank" rel="noreferrer">
-          <span class="dot"></span> GitHub
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="테마 변경">
+  <span class="icon icon-sun">☀️</span>
+  <span class="icon icon-moon">🌙</span>
+</button>
+
+<!-- Side Navigation -->
+<nav class="side-nav">
+  <div class="logo">CozyDude</div>
+  <ul>
+    <li><a href="#intro" class="active" data-section="intro">INTRO</a></li>
+    <li><a href="#about" data-section="about">ABOUT</a></li>
+    <li><a href="#skills" data-section="skills">SKILLS</a></li>
+    <li><a href="#projects" data-section="projects">PROJECTS</a></li>
+    <li><a href="#contact" data-section="contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- INTRO -->
+  <section id="intro" class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      프론트엔드 개발자 포트폴리오
+    </div>
+    <h1>
+      HELLO, I'M<br>
+      <span class="gradient">CREATIVE</span><br>
+      DEVELOPER
+    </h1>
+    <p class="hero-sub">
+      사용자의 눈과 손끝에 닿는 경험을 만듭니다.<br>
+      꾸준히 성장하는 프론트엔드 개발자입니다.
+    </p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn btn-primary">프로젝트 보기 ↓</a>
+      <a href="#contact" class="btn btn-outline">연락하기</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll Down</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT ME -->
+  <section id="about" class="about-section">
+    <div class="section-header reveal">
+      <div class="section-label">// ABOUT ME</div>
+      <h2 class="section-title">저를 소개합니다</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-content reveal">
+      <div class="about-visual">
+        <div class="about-avatar-wrap">
+          <div class="about-avatar-ring"></div>
+          <div class="about-avatar-inner">
+            <img src="assets/thumbs/thumb_me.jpg" alt="프로필" class="avatar-img">
+
+          </div>
+        </div>
+        <div class="about-info-list">
+          <div class="about-info-item">
+            <span class="about-info-icon">👤</span>
+            <span>정하영</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-icon">📍</span>
+            <span>서울시 금천구</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-icon">📞</span>
+            <span>010-8921-0024</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-icon">✉️</span>
+            <span>ihatethiscode999@gmail.com</span>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="about-stat-number">5+</div>
+            <div class="about-stat-label">프로젝트</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-number">6개월</div>
+            <div class="about-stat-label">학습 기간</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-text-area">
+        <h3 class="about-headline">사용자 경험을 설계하는 프론트엔드 개발자</h3>
+        <p class="about-desc">
+  안녕하세요, 사용자 경험을 중요하게 생각하는 프론트엔드 개발자 정하영입니다.<br><br>
+
+  단순히 화면을 구현하는 것에 그치지 않고, 사용자가 어떻게 보고 느끼고 흐름을 따라가는지 고민하며
+  UI/UX를 기반으로 한 개발을 지향하고 있습니다.<br><br>
+
+  React를 활용한 프로젝트를 진행하며 컴포넌트 구조와 상태 흐름을 설계하는 경험을 쌓았고,
+  PHP·MySQL을 활용한 백엔드 개발까지 함께 경험하면서
+  서비스 전체 구조와 데이터 흐름을 이해하는 개발자로 성장해왔습니다.<br><br>
+
+  앞으로도 기술과 사용자 경험 사이의 균형을 고민하며,
+  더 나은 방향을 스스로 설계할 수 있는 개발자로 성장하는 것을 목표로 하고 있습니다.
+        </p>
+        <div class="about-tags">
+          <span class="about-tag">🎯 문제 해결 능력</span>
+          <span class="about-tag">🤝 팀 협업</span>
+          <span class="about-tag">📚 끊임없는 학습</span>
+          <span class="about-tag">✨ UI/UX 관심</span>
+          <span class="about-tag">🚀 빠른 습득력</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <div class="section-label">// MY SKILLS</div>
+      <h2 class="section-title">기술 스택</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-category-grid reveal">
+      <div class="skill-category-card">
+        <div class="skill-cat-icon">🌐</div>
+        <h3 class="skill-cat-title">Core Web</h3>
+        <p class="skill-cat-desc">웹의 기본기를 탄탄하게 갖추고, 시맨틱 마크업과 반응형 디자인을 구현합니다.</p>
+        <div class="skill-cat-tags">
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">JavaScript (ES6+)</span>
+        </div>
+      </div>
+      <div class="skill-category-card">
+        <div class="skill-cat-icon">⚛️</div>
+        <h3 class="skill-cat-title">Framework & Library</h3>
+        <p class="skill-cat-desc">모던 프레임워크를 활용하여 효율적이고 유지보수하기 쉬운 코드를 작성합니다.</p>
+        <div class="skill-cat-tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">jQuery</span>
+        </div>
+      </div>
+      <div class="skill-category-card">
+        <div class="skill-cat-icon">🎨</div>
+        <h3 class="skill-cat-title">Styling & Design</h3>
+        <p class="skill-cat-desc">다양한 스타일링 도구를 사용해 일관성 있고 아름다운 UI를 만듭니다.</p>
+        <div class="skill-cat-tags">
+          <span class="tech-tag">SCSS/Sass</span>
+          <span class="tech-tag">Bootstrap</span>
+        </div>
+      </div>
+      <div class="skill-category-card">
+        <div class="skill-cat-icon">🗄️</div>
+        <h3 class="skill-cat-title">Backend & Database</h3>
+        <p class="skill-cat-desc">서버와 데이터베이스 구조를 이해하고, API 설계부터 DB 연동까지 경험했습니다.</p>
+        <div class="skill-cat-tags">
+          <span class="tech-tag">PHP</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">REST API</span>
+        </div>
+      </div>
+      <div class="skill-category-card">
+        <div class="skill-cat-icon">🛠️</div>
+        <h3 class="skill-cat-title">Tools & DevOps</h3>
+        <p class="skill-cat-desc">개발 워크플로우를 효율적으로 관리하고 협업 환경을 구축합니다.</p>
+        <div class="skill-cat-tags">
+          <span class="tech-tag">Git / GitHub</span>
+          <span class="tech-tag">VS Code</span>
+          <span class="tech-tag">Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <div class="section-label">// MY PROJECTS</div>
+      <h2 class="section-title">프로젝트</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="ALL">ALL</button>
+      <button class="filter-btn" data-filter="TEAM">TEAM</button>
+      <button class="filter-btn" data-filter="PERSONAL">PERSONAL</button>
+      <button class="filter-btn" data-filter="MINI">MINI</button>
+    </div>
+    <div class="projects-grid reveal" id="projectsGrid"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <div class="section-label">// CONTACT ME</div>
+      <h2 class="section-title">연락하기</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-content reveal">
+      <p class="contact-text">
+        함께 일하고 싶으시거나 궁금한 점이 있다면<br>
+        편하게 연락주세요!
+      </p>
+      <div class="contact-links">
+        <a href="mailto:ihatethiscode999@gmail.com" class="contact-item">
+          <div class="contact-icon email">✉️</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">ihatethiscode999@gmail.com</div>
+          </div>
         </a>
-        <a class="pill" href="#" id="topResumeBtn" target="_blank" rel="noreferrer">
-          <span class="dot"></span> Resume
+        <a href="tel:01089210024" class="contact-item">
+          <div class="contact-icon" style="background:rgba(91,173,122,0.12);">📞</div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">010-8921-0024</div>
+          </div>
         </a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="top">
-    <div id="main-content"></div>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container hero__grid">
-        <div>
-          <div class="kicker"><span class="spark"></span> Frontend Developer · UI / UX</div>
-          <h1>사용자 경험을 설계하는 프론트엔드 개발자 <br> 정하영입니다</h1>
-            <p>
-            UI/UX를 이해하고, 단순한 화면 구현을 넘어 실제 서비스 구조까지 설계하고 구현하는 프론트엔드 개발자입니다.<br><br>
-
-            React 기반 프로젝트 PING에서는 이미지 좌표를 기반으로 핀을 생성하고 질문과 답변을 연결하는 기능을 구현하며,
-            DB 설계, API 구조, 인증 처리까지 포함한 전체 흐름을 직접 설계하고 개발했습니다.
-            이 과정을 통해 “기능 구현”보다 중요한 것은 데이터 구조와 서비스 흐름이라는 것을 체감했습니다.<br><br>
-
-            또한 대한항공, 캐스퍼, 파스쿠찌 랜딩페이지 프로젝트를 통해
-            정보 구조를 재정리하고 사용자 시선 흐름을 고려한 UI 설계 경험을 쌓았습니다.
-            단순히 디자인을 구현하는 것이 아니라, 사용자가 정보를 더 빠르고 명확하게 이해할 수 있도록 구조를 개선하는 데 집중했습니다.<br><br>
-
-            Webzen 팀 프로젝트에서는 PHP·MySQL 기반으로 게시판과 관리자 기능을 구현하며,
-            CRUD 구조와 권한 분리, 데이터 흐름 설계를 경험했습니다.<br><br>
-
-            이러한 경험을 바탕으로,
-            저는 “어떻게 만들 것인가”보다 “왜 이렇게 설계해야 하는가”를 고민하며 개발하는 것을 중요하게 생각합니다.<br><br>
-
-            기능 구현을 넘어서 사용자 경험과 데이터 구조를 함께 설계하는 개발자로 성장하고 있습니다.
-            </p>
-
-        </div>
-
-        <!-- ✅ 원본 hero-card 구조 유지 (preview + mini 그대로) -->
-        <aside class="hero-card" aria-label="highlight card">
-          <div class="preview" aria-hidden="true"></div>
-            <p>
-              <br>
-              Frontend Developer · UI / UX
-            <br>
-            <br>
-            정하영
-            <br>
-            00.01.25
-            <br>
-            ihatethiscode999@gmail.com
-            <br>
-            서울시 금천구
-            <br>
-
-          </p>
-          <div class="cta-row">
-            <a class="btn primary" href="#projects">View Projects</a>
-            <a class="btn" href="#" id="heroGithubBtn" target="_blank" rel="noreferrer">GitHub</a>
-            <a class="btn" href="#" id="heroResumeBtn" target="_blank" rel="noreferrer">Resume</a>
-            <a class="btn ghost" href="#contact">Contact</a>
+        <a href="https://github.com/CozyDudeBoy" target="_blank" class="contact-item">
+          <div class="contact-icon github-icon">🐙</div>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">github.com/CozyDudeBoy</div>
           </div>
-
-          <div class="cta-row" style="margin-top:14px;">
-            <span class="chip"><span class="tiny"></span> Clean UI</span>
-            <span class="chip"><span class="tiny"></span> Landing / Publishing</span>
-            <span class="chip"><span class="tiny"></span> Team Project</span>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about">
-      <div class="container">
-        <div class="section-title">
-          <h2>About</h2>
-          <p>짧고 명확하게. 링크를 클릭하면 결과물을 바로 확인할 수 있습니다.</p>
-        </div>
-
-        <div class="grid-2">
-          <div class="panel pad">
-            <h3 style="margin:0 0 8px;">요약</h3>
-            <p class="muted" style="margin:0;">
-              사용자의 시선 흐름과 정보 구조를 고려해 랜딩페이지를 구성하고,
-              팀 프로젝트에서는 데이터 구조/연동을 포함해 끝까지 완성하는 것을 목표로 합니다.
-            </p>
-            <ul class="list">
-              <li>랜딩 리뉴얼(브랜드/정보 구조/가독성 개선)</li>
-              <li>React 기반 서비스형 프로젝트 경험(PING)</li>
-              <li>PHP·MySQL 기반 CRUD/관리자 기능 구현(Webzen)</li>
-            </ul>
-          </div>
-
-          <div class="panel pad">
-            <h3 style="margin:0 0 8px;">Key Strength</h3>
-            <ul class="list">
-              <li>레이아웃/타이포/여백으로 밀도 조절 → 가독성 개선</li>
-              <li>컴포넌트화 가능한 UI 구조 설계</li>
-              <li>프로젝트별 역할과 결과를 “짧게” 전달하는 정리 능력</li>
-            </ul>
-
-            <div class="divider"></div>
-
-            <div class="muted" style="font-size:13px;">
-              * 카드 클릭 → 상세 모달에서 기능/역할/테스트 계정 확인 가능
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-<!-- Skills -->
-<section id="skills">
-  <div class="container">
-    <div class="section-title">
-      <h2>Skills</h2>
-      <p>실제 프로젝트에서 사용하며 구현한 기술 중심으로 정리했습니다.</p>
-    </div>
-
-    <div class="grid-2">
-      <!-- LEFT -->
-      <div class="panel pad">
-        <h3 style="margin:0 0 8px;">Frontend</h3>
-        <div class="skill-box">
-          <span class="tag">HTML / CSS → 반응형 레이아웃 및 UI 퍼블리싱</span>
-          <span class="tag">SCSS / Sass → 스타일 구조화 및 유지보수</span>
-          <span class="tag">JavaScript → DOM 제어 및 인터랙션 구현</span>
-          <span class="tag">jQuery → 이벤트 처리 및 기능 구현 경험</span>
-          <span class="tag">React → 컴포넌트 기반 구조 설계 및 상태 관리</span>
-        </div>
-
-        <div class="divider"></div>
-
-        <h3 style="margin:0 0 8px;">Backend</h3>
-        <div class="skill-box">
-          <span class="tag">PHP → 게시판 및 관리자 기능 구현</span>
-          <span class="tag">MySQL → DB 설계 및 관계 구조 정의</span>
-          <span class="tag">CRUD → 데이터 생성/조회/수정/삭제 구현</span>
-          <span class="tag">Auth / Admin → 로그인 인증 및 권한 분리</span>
-        </div>
-      </div>
-
-      <!-- RIGHT -->
-      <div class="panel pad">
-        <h3 style="margin:0 0 8px;">Tools</h3>
-        <div class="skill-box">
-          <span class="tag">Git / GitHub → 버전 관리 및 협업</span>
-          <span class="tag">Figma → UI 구조 분석 및 설계</span>
-          <span class="tag">Bootstrap / Tailwind → UI 빠른 구현</span>
-          <span class="tag">Cloudtype → 프론트/백엔드 배포 경험</span>
-          <span class="tag">ERD Cloud → DB 구조 설계 및 시각화</span>
-        </div>
-
-        <div class="divider"></div>
-
-<h3 style="margin:0 0 8px;">What I focus on</h3>
-<ul class="list">
-  <li>사용자의 시선 흐름을 고려해 정보가 자연스럽게 이어지는 UI 구조 설계</li>
-  <li>정보 구조를 기반으로 불필요한 요소를 줄이고 가독성과 전달력을 개선하는 레이아웃 구성</li>
-  <li>요청 → 처리 → DB → 출력까지 이어지는 전체 데이터 흐름을 이해하고 설계</li>
-  <li>기능 구현에 그치지 않고 “왜 이 구조가 필요한지”를 고민하며 개발</li>
-</ul>
-
-<p class="muted" style="margin-top:12px;">
-  * React, HTML/CSS, JavaScript 기반 UI 구현과 PHP·MySQL을 활용한 DB 설계, API 처리까지 프론트엔드와 백엔드를 포함한 전체 서비스 구조를 직접 구현한 경험 보유
-</p>
+        </a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-    <!-- Projects -->
-    <section id="projects">
-      <div class="container">
-        <div class="section-title">
-          <h2>Projects</h2>
-          <p>검색 후 카드 클릭하면 상세 모달이 열립니다. (Live / GitHub)</p>
-        </div>
-
-        <div class="tools-row">
-          <div class="search" role="search">
-            <span class="icon" aria-hidden="true"></span>
-            <input id="projectSearch" type="text" placeholder="Search (ex: PING, PHP, Landing, React, MySQL)"
-              aria-label="프로젝트 검색" />
-          </div>
-          <button class="btn" id="resetSearchBtn" type="button">Reset</button>
-        </div>
-
-        <div class="proj-grid" id="projectGrid" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <!-- Team -->
-    <section id="team">
-      <div class="container">
-        <div class="section-title">
-          <h2>Team Project</h2>
-          <p>팀 프로젝트 2개를 슬라이더로 정리했습니다.</p>
-        </div>
-
-        <div class="slider" aria-label="team slider">
-          <div class="slider__viewport">
-            <div class="slider__track" id="sliderTrack"></div>
-          </div>
-
-          <button class="slider__btn prev" type="button" id="prevSlide" aria-label="previous slide">
-            <span class="arrow" aria-hidden="true"></span>
-          </button>
-          <button class="slider__btn next" type="button" id="nextSlide" aria-label="next slide">
-            <span class="arrow" aria-hidden="true"></span>
-          </button>
-
-          <div class="dots" id="sliderDots" aria-label="slider dots"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <div class="container">
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>메일/링크를 빠르게 확인할 수 있도록 최소 구성으로 만들었습니다.</p>
-        </div>
-
-        <div class="grid-2">
-          <div class="panel pad">
-            <h3 style="margin:0 0 8px;">Links</h3>
-            <p class="muted" style="margin:0 0 12px;">GitHub / Resume 링크를 바로 확인할 수 있습니다.</p>
-            <div class="cta-row">
-              <a class="btn primary" id="contactGithubBtn" href="#" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="btn" id="contactResumeBtn" href="#" target="_blank" rel="noreferrer">Resume</a>
-            </div>
-            <div class="divider"></div>
-            <p class="hint">
-              Email: <b id="emailText">ihatethiscode999@gmail.com</b>
-              <button class="btn" type="button" id="copyEmailBtn"
-                style="padding:9px 12px; border-radius:12px;">Copy</button>
-            </p>
-          </div>
-
-          <div class="panel pad">
-            <h3 style="margin:0 0 8px;">Message</h3>
-            <form id="contactForm" novalidate>
-              <div class="form-row">
-                <div class="field">
-                  <label for="name">이름</label>
-                  <input id="name" type="text" placeholder="홍길동" />
-                </div>
-                <div class="field">
-                  <label for="email">이메일</label>
-                  <input id="email" type="email" placeholder="name@example.com" />
-                </div>
-              </div>
-              <div class="field">
-                <label for="message">메시지</label>
-                <textarea id="message" placeholder="간단히 남겨주세요."></textarea>
-              </div>
-              <button class="btn primary" type="submit">Send (Demo)</button>
-              <p class="hint">* 데모 페이지라 실제 전송은 안 되고, 유효성 체크만 합니다.</p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">© <span id="year"></span> CozyDudeBoy · Portfolio</div>
-    </footer>
-  </main>
+</main>
 
 <!-- Modal -->
-<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-
-    <!-- 이미지 영역 -->
-    <div class="modal__media">
-      <div class="modal__shot" id="modalShot" aria-hidden="true"></div>
-    </div>
-
-    <!-- 콘텐츠 영역 -->
-    <div class="modal__content">
-      <div class="modal__top">
-        <div>
-          <h3 id="modalTitle">Project Title</h3>
-          <div class="meta" id="modalMeta">기간 · 역할</div>
-        </div>
-        <button class="xbtn" type="button" id="closeModal" aria-label="close modal">✕</button>
-      </div>
-
-      <!-- 기존 요약 -->
-      <p id="modalSummary">프로젝트 요약</p>
-
-      <!-- 🔥 추가 영역 시작 -->
-      <div class="block-title">프로젝트 설명</div>
-      <p id="modalDesc"></p>
-
-      <div class="block-title">내 역할</div>
-      <ul class="bullets" id="modalRole"></ul>
-
-      <div class="block-title">문제 해결</div>
-      <ul class="bullets" id="modalTrouble"></ul>
-
-      <div class="block-title">배운 점</div>
-      <ul class="bullets" id="modalLearn"></ul>
-      <!-- 🔥 추가 영역 끝 -->
-
-      <!-- 테스트 계정 -->
-      <div id="modalTestWrap" style="display:none;">
-        <div class="block-title">테스트 계정</div>
-        <div class="kv" id="modalTest"></div>
-      </div>
-
-      <!-- 기존 기능 -->
-      <div class="block-title">핵심 기능</div>
-      <ul class="bullets" id="modalFeatures"></ul>
-
-      <!-- 기존 기술 -->
-      <div class="block-title">Tech</div>
-      <div class="tag-row" id="modalTech"></div>
-
-      <!-- 링크 -->
-      <div class="modal__links">
-        <a class="link-btn" id="modalLive" href="#" target="_blank">Live</a>
-        <a class="link-btn detail" id="modalGithubFront" href="#" target="_blank" rel="noreferrer" style="display:none;">Front GitHub</a>
-        <a class="link-btn detail" id="modalGithubBack" href="#" target="_blank" rel="noreferrer" style="display:none;">Back GitHub</a>
-        <a class="link-btn detail" id="modalGithub" href="#" target="_blank" rel="noreferrer" style="display:none;">GitHub</a>
-      </div>
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-scroll">
+      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="top-btn" id="topBtn" onclick="scrollToTop()" aria-label="맨 위로 이동">
+  ↑
+</button>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ===== PROJECT DATA =====
+const PROJECTS = [
+  {
+    id: "ping",
+    badge: "TEAM",
+    title: "PING 프로젝트",
+    desc: "디자인 이미지에 핀(좌표)을 찍어 구조화된 피드백을 주고받는 플랫폼",
+    period: "2026.01.05 – 2026.02.13",
+    role: "개발 (프론트 30% · 백엔드 70%)",
+    tech: ["React", "Sass", "MySQL"],
+    summary: "이미지 위 좌표 기반 핀을 생성해 질문/답변을 연결하는 피드백 플랫폼",
+    descDetail: "디자인 피드백 과정에서 발생하는 '어디를 말하는지 불명확한 문제'를 해결하기 위해 제작한 서비스입니다. 이미지 좌표 기반으로 핀을 생성하고 질문/답변을 연결하는 구조를 설계했습니다.",
+    roleDetail: [
+      "DB 설계 및 테이블 관계 구조 직접 설계",
+      "핀 좌표(x, y) 저장 및 렌더링 로직 구현",
+      "JWT 기반 로그인/인증 처리",
+      "게시물 → 핀 → 답변 흐름 API 설계"
+    ],
+    trouble: [
+      "좌표 기반 핀 위치 오차 문제 → % 좌표 방식으로 해결",
+      "게시물/핀/답변 관계 설계 충돌 → ERD 재구성",
+      "배포 환경 DB 연결 오류 → 환경 설정 수정"
+    ],
+    learn: [
+      "데이터 구조 설계의 중요성 체감",
+      "좌표 기반 인터랙션 설계 경험",
+      "서비스 흐름 설계 경험"
+    ],
+    features: [
+      "핀(좌표) 기반 피드백 시스템",
+      "게시물·핀·답변 관계형 구조",
+      "관리자/사용자 기능 분리",
+      "실서비스 배포"
+    ],
+      images: [
+    "assets/ping/ping1.png",
+    "assets/ping/ping2.png",
+    "assets/ping/ping3.png"
+    ],
+    testAccount: "관리자 : admin / 1234 (admin 페이지는 주소 끝에 admin을 추가해주세요) 유저 : user1/1234, user2/1234",
+    live: "https://web-ping-frontend-mkvwe63p223f9070.sel3.cloudtype.app/",
+    githubFront: "https://github.com/CozyDudeBoy/ping_frontend",
+    githubBack: "https://github.com/CozyDudeBoy/ping_backend",
+    icon: "📌",
+    thumb: "assets/thumbs/thumb_ping.jpg"
+  },
+  {
+    id: "webzen",
+    badge: "TEAM",
+    title: "Webzen 게임사이트 리뉴얼",
+    desc: "PHP·MySQL 기반 게시판 및 관리자 기능 구현",
+    period: "2025.11.11 – 2025.12.12",
+    role: "백엔드 개발",
+    tech: ["PHP", "MySQL", "Bootstrap"],
+    summary: "사용자/관리자 기능을 포함한 게임 포털 구조 구현",
+    descDetail: "게임 포털 사이트를 실제 서비스 구조로 구현한 프로젝트입니다. 게시판과 관리자 기능을 포함해 운영 흐름을 고려했습니다.",
+    roleDetail: [
+      "MySQL 테이블 구조 설계",
+      "게시판/FAQ CRUD 구현",
+      "관리자 권한 분리",
+      "데이터 연동 처리"
+    ],
+    trouble: [
+      "데이터 관계 충돌 → 테이블 재설계",
+      "권한 처리 오류 → 로직 분리",
+      "폼 데이터 처리 문제 → 요청 흐름 수정"
+    ],
+    learn: [
+      "CRUD 구조 이해",
+      "관리자 시스템 경험",
+      "데이터 흐름 설계 능력 향상"
+    ],
+    features: [
+      "게시판 CRUD",
+      "FAQ 기능",
+      "관리자 기능",
+      "DB 연동"
+    ],
+          images: [
+    "assets/webzen/webzen1.png",
+    "assets/webzen/webzen2.png",
+    "assets/webzen/webzen3.png"
+    ],
+    testAccount: "admin / 1234",
+    live: "https://ihatethiscode.dothome.co.kr/webzen/",
+    github: "https://github.com/kmrjsals-ops/project",
+    icon: "🎮",
+    thumb: "assets/thumbs/thumb_webzen.jpg"
+  },
+  {
+    id: "koreanair",
+    badge: "PERSONAL",
+    title: "대한항공 랜딩페이지",
+    desc: "정보 구조 개선 중심 랜딩 리뉴얼",
+    period: "2025.09",
+    role: "전체 제작",
+    tech: ["HTML", "CSS", "JavaScript"],
+    summary: "기존 사이트를 분석해 UI/UX 개선 중심으로 리뉴얼",
+    descDetail: "대한항공 사이트를 분석해 정보 구조와 가독성을 개선한 프로젝트입니다.",
+    roleDetail: [
+      "레이아웃 구조 설계",
+      "퍼블리싱 구현",
+      "인터랙션 구현",
+      "반응형 설계"
+    ],
+    trouble: [
+      "정보 과다 → 구조 재배치",
+      "레이아웃 깨짐 → grid 재설계"
+    ],
+    learn: [
+      "정보 구조 설계 경험",
+      "UI 흐름 중요성 이해"
+    ],
+    features: [
+      "랜딩 UI 구조 개선",
+      "반응형 디자인",
+      "인터랙션"
+    ],
+          images: [
+    "assets/koreanair/koreanair1.png",
+    "assets/koreanair/koreanair2.png",
+    "assets/koreanair/koreanair3.png"
+    ],
+    testAccount: "",
+    live: "https://ihatethiscode.dothome.co.kr/project1/",
+    github: "https://github.com/CozyDudeBoy/p1_koreanair",
+    icon: "✈️",
+    thumb: "assets/thumbs/thumb_koreanair.jpg"
+  },
+  {
+    id: "casper",
+    badge: "MINI",
+    title: "캐스퍼 랜딩페이지",
+    desc: "제품 소개 중심 랜딩 구현",
+    period: "2025.11",
+    role: "전체 제작",
+    tech: ["HTML", "SCSS", "JavaScript"],
+    summary: "제품 중심 구조 랜딩페이지 제작",
+    descDetail: "제품 특징과 구매 유도 흐름을 중심으로 구성한 랜딩페이지입니다.",
+    roleDetail: [
+      "UI 구조 설계",
+      "SCSS 구조화",
+      "반응형 구현"
+    ],
+    trouble: [
+      "레이아웃 정렬 문제 → 구조 수정"
+    ],
+    learn: [
+      "랜딩 흐름 설계 경험"
+    ],
+    features: [
+      "제품 소개 UI",
+      "반응형",
+      "스타일 구조화"
+    ],
+          images: [
+    "assets/casper/casper1.png",
+    "assets/casper/casper2.png",
+    "assets/casper/casper3.png"
+    ],
+    testAccount: "",
+    live: "https://cozydudeboy.github.io/2025casper/",
+    github: "https://github.com/CozyDudeBoy/2025casper",
+    icon: "🚗",
+    thumb: "assets/thumbs/thumb_casper.jpg"
+  },
+  {
+    id: "pascucci",
+    badge: "MINI",
+    title: "파스쿠찌 랜딩페이지",
+    desc: "브랜드 중심 퍼블리싱",
+    period: "2025.10",
+    role: "전체 제작",
+    tech: ["HTML", "CSS"],
+    summary: "브랜드 톤 중심 UI 제작",
+    descDetail: "브랜드 컬러와 분위기를 살려 제작한 랜딩페이지입니다.",
+    roleDetail: [
+      "퍼블리싱",
+      "레이아웃 구성"
+    ],
+    trouble: [
+      "디자인 정렬 문제 → 구조 수정"
+    ],
+    learn: [
+      "브랜드 표현 경험"
+    ],
+    features: [
+      "브랜드 UI",
+      "레이아웃"
+    ],
+          images: [
+    "assets/pascucci/pascucci1.png",
+    "assets/pascucci/pascucci2.png",
+    "assets/pascucci/pascucci3.png"
+    ],
+    testAccount: "",
+    live: "https://cozydudeboy.github.io/passcu/index.html",
+    github: "https://github.com/CozyDudeBoy/passcu",
+    icon: "☕",
+    thumb: "assets/thumbs/thumb_pascucci.jpg"
+  }
+];
 
-  <script src="./script/main.js"></script>
+// ===== RENDER PROJECTS =====
+function renderProjects(filter = 'ALL') {
+  const grid = document.getElementById('projectsGrid');
+  const filtered = filter === 'ALL' ? PROJECTS : PROJECTS.filter(p => p.badge === filter);
+
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="project-card" onclick="openModal('${p.id}')" style="animation: fadeUp 0.5s ease ${i * 0.1}s both;">
+      <div class="project-thumb">
+        ${`<img src="${p.thumb}" class="thumb-img" />`}
+        <span class="badge badge-${p.badge}">${p.badge}</span>
+      </div>
+      <div class="project-info">
+        <h3 class="project-title">${p.title}</h3>
+        <p class="project-desc">${p.desc}</p>
+        <div class="project-tech">
+          ${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+        </div>
+        <div class="project-period">${p.period}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== FILTER =====
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProjects(btn.dataset.filter);
+  });
+});
+
+// ===== MODAL =====
+function openModal(id) {
+  const p = PROJECTS.find(proj => proj.id === id);
+  if (!p) return;
+
+  const badgeClass = `badge-${p.badge}`;
+  let linksHtml = '';
+  if (p.live) linksHtml += `<a href="${p.live}" target="_blank" class="modal-link live">🔗 Live Demo</a>`;
+  if (p.github) linksHtml += `<a href="${p.github}" target="_blank" class="modal-link github">📂 GitHub</a>`;
+  if (p.githubFront) linksHtml += `<a href="${p.githubFront}" target="_blank" class="modal-link github">📂 Frontend</a>`;
+  if (p.githubBack) linksHtml += `<a href="${p.githubBack}" target="_blank" class="modal-link github">📂 Backend</a>`;
+
+  let testHtml = '';
+  if (p.testAccount) {
+    testHtml = `<div class="modal-test-account">🔑 테스트 계정: ${p.testAccount}</div>`;
+  }
+
+  document.getElementById('modalBody').innerHTML = `
+    <!-- ✅ 슬라이드 -->
+  <div class="modal-slider">
+    ${p.images.map((img, i) => `
+      <img src="${img}" class="slide ${i === 0 ? 'active' : ''}">
+    `).join('')}
+    
+    <button class="slide-btn prev" onclick="prevSlide()">‹</button>
+    <button class="slide-btn next" onclick="nextSlide()">›</button>
+  </div>
+    <span class="modal-badge ${badgeClass}">${p.badge}</span>
+    <h2 class="modal-title">${p.title}</h2>
+    <div class="modal-meta">
+      <span>📅 ${p.period}</span>
+      <span>👤 ${p.role}</span>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">프로젝트 소개</div>
+      <p>${p.descDetail}</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">담당 역할</div>
+      <ul>${p.roleDetail.map(r => `<li>${r}</li>`).join('')}</ul>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">트러블슈팅</div>
+      <ul>${p.trouble.map(t => `<li>${t}</li>`).join('')}</ul>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">배운 점</div>
+      <ul>${p.learn.map(l => `<li>${l}</li>`).join('')}</ul>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">주요 기능</div>
+      <ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>
+    </div>
+
+    ${testHtml}
+
+    <div class="modal-links">${linksHtml}</div>
+  `;
+
+  const overlay = document.getElementById('modalOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => overlay.classList.add('show'));
+  document.body.style.overflow = 'hidden';
+
+  currentSlide = 0;
+setTimeout(() => showSlide(0), 0);
+}
+
+function closeModal() {
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.remove('show');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ===== THEME =====
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+}
+
+// ===== SCROLL NAV =====
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.side-nav a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => link.classList.remove('active'));
+      const activeLink = document.querySelector(`.side-nav a[data-section="${entry.target.id}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(sec => observer.observe(sec));
+
+// ===== REVEAL ON SCROLL =====
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===== INIT =====
+renderProjects();
+
+// ===== GEOMETRIC BACKGROUND =====
+(function initBg() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  let mouseX = 0, mouseY = 0;
+  let sY = 0;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / W - 0.5) * 2;
+    mouseY = (e.clientY / H - 0.5) * 2;
+  });
+  window.addEventListener('scroll', () => { sY = window.pageYOffset; });
+
+  const shapes = [];
+  for (let i = 0; i < 35; i++) {
+    shapes.push({
+      x: Math.random() * 2000 - 200,
+      y: Math.random() * 6000,
+      z: 0.4 + Math.random() * 0.6,
+      size: 40 + Math.random() * 80,
+      type: Math.floor(Math.random() * 5),
+      rot: Math.random() * Math.PI * 2,
+      rotSpd: (Math.random() - 0.5) * 0.006,
+      fOff: Math.random() * Math.PI * 2,
+      fAmp: 10 + Math.random() * 25,
+    });
+  }
+
+  function colors() {
+    const dk = document.documentElement.getAttribute('data-theme') === 'dark';
+    return {
+      s: dk ? 'rgba(120,150,240,0.25)' : 'rgba(160,148,135,0.35)',
+      f: dk ? 'rgba(80,100,200,0.1)' : 'rgba(200,190,178,0.2)',
+    };
+  }
+
+  function draw(type, sz) {
+    switch(type) {
+      case 0:
+        var s=sz*0.5, o=s*0.35;
+        ctx.beginPath();
+        ctx.rect(-s/2,-s/2,s,s);
+        ctx.moveTo(-s/2+o,-s/2-o); ctx.lineTo(s/2+o,-s/2-o);
+        ctx.lineTo(s/2+o,s/2-o); ctx.lineTo(s/2,s/2);
+        ctx.moveTo(s/2+o,-s/2-o); ctx.lineTo(s/2,-s/2);
+        ctx.moveTo(-s/2+o,-s/2-o); ctx.lineTo(-s/2,-s/2);
+        ctx.stroke(); break;
+      case 1:
+        ctx.beginPath();
+        ctx.moveTo(0,-sz*0.5); ctx.lineTo(sz*0.45,sz*0.4); ctx.lineTo(-sz*0.45,sz*0.4);
+        ctx.closePath(); ctx.fill(); ctx.stroke(); break;
+      case 2:
+        ctx.beginPath();
+        ctx.moveTo(0,-sz*0.5); ctx.lineTo(sz*0.35,0); ctx.lineTo(0,sz*0.5); ctx.lineTo(-sz*0.35,0);
+        ctx.closePath(); ctx.fill(); ctx.stroke(); break;
+      case 3:
+        ctx.beginPath();
+        for(var j=0;j<6;j++){var a=(Math.PI/3)*j-Math.PI/6,r=sz*0.4;ctx[j===0?'moveTo':'lineTo'](Math.cos(a)*r,Math.sin(a)*r);}
+        ctx.closePath(); ctx.fill(); ctx.stroke(); break;
+      case 4:
+        var t=sz*0.12, l=sz*0.4;
+        ctx.beginPath(); ctx.rect(-t,-l,t*2,l*2); ctx.rect(-l,-t,l*2,t*2);
+        ctx.fill(); ctx.stroke(); break;
+    }
+  }
+
+  let time = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.008;
+    ctx.clearRect(0,0,W,H);
+    const c = colors();
+    const cx = mouseX * 25, cy = mouseY * 15;
+
+    shapes.forEach(s => {
+      s.rot += s.rotSpd;
+      const fy = Math.sin(time + s.fOff) * s.fAmp;
+      const px = ((s.x - cx * s.z) % (W+200) + (W+200)) % (W+200) - 100;
+      const py = ((s.y + fy - sY * s.z * 0.25) % (H+400) + (H+400)) % (H+400) - 200;
+
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(s.rot);
+      ctx.globalAlpha = 0.8 * s.z;
+      ctx.strokeStyle = c.s;
+      ctx.fillStyle = c.f;
+      ctx.lineWidth = 1.5;
+      draw(s.type, s.size * s.z);
+      ctx.restore();
+    });
+  }
+  animate();
+})();
+
+let currentSlide = 0;
+
+function showSlide(index){
+  const slides = document.querySelectorAll('.modal-slider .slide');
+  if(!slides.length) return;
+
+  currentSlide = (index + slides.length) % slides.length;
+
+  slides.forEach(s => s.classList.remove('active'));
+  slides[currentSlide].classList.add('active');
+}
+
+function nextSlide(){
+  showSlide(currentSlide + 1);
+}
+
+function prevSlide(){
+  showSlide(currentSlide - 1);
+}
+
+function scrollToTop(){
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+const topBtn = document.getElementById('topBtn');
+
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 300){
+    topBtn.classList.add('show');
+  } else {
+    topBtn.classList.remove('show');
+  }
+});
+</script>
+
 </body>
-
 </html>
